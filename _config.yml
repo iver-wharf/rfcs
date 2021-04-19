@@ -12,10 +12,8 @@ last_edit_time_format: "%F at %R" # uses ruby's time format: https://ruby-doc.or
 
 # Aux links for the upper right navigation
 aux_links:
-  "Wharf documentation":
-    - //iver-wharf.github.io/
-  "GitHub":
-    - //github.com/iver-wharf
+  "Wharf documentation": https://iver-wharf.github.io/
+  "GitHub": https://github.com/iver-wharf/rfcs
 
 aux_links_new_tab: true
 
