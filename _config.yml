@@ -7,8 +7,8 @@ github_username: iver-wharf
 
 remote_theme: pmarsceill/just-the-docs
 color_scheme: dark
-last_edit_timestamp: true # page must have `last_modifier_date` in frontmatter
-last_edit_time_format: "%F at %R" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
+last_edit_timestamp: true # page must have `last_modified_date` in frontmatter
+last_edit_time_format: "%F" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
 
 # Aux links for the upper right navigation
 aux_links:
