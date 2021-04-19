@@ -2,7 +2,7 @@ title: Wharf RFCs
 description: Wharf approved and pending design decisions using request for comment (RFC) process
 footer_content: >-
   Copyright &copy; 2021 Wharf (Iver Sverige AB).
-  Distributed by an <a href=\"https://github.com/iver-wharf/rfcs/tree/master/LICENSE\">MIT license.</a>
+  Distributed by an <a href="https://github.com/iver-wharf/rfcs/tree/master/LICENSE">MIT license.</a>
 github_username: iver-wharf
 
 remote_theme: pmarsceill/just-the-docs
