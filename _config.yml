@@ -1,0 +1,42 @@
+title: Wharf RFCs
+description: Wharf approved and pending design decisions using request for comment (RFC) process
+footer_content: >-
+  Copyright &copy; 2021 Wharf (Iver Sverige AB).
+  Distributed by an <a href=\"https://github.com/iver-wharf/rfcs/tree/master/LICENSE\">MIT license.</a>
+github_username: iver-wharf
+
+theme: just-the-docs
+color_scheme: dark
+last_edit_timestamp: true # page must have `last_modifier_date` in frontmatter
+last_edit_time_format: "%F at %R" # uses ruby's time format: https://ruby-doc.org/stdlib-2.7.0/libdoc/time/rdoc/Time.html
+
+# Aux links for the upper right navigation
+aux_links:
+  "Wharf documentation":
+    - //iver-wharf.github.io/
+  "GitHub":
+    - //github.com/iver-wharf
+
+aux_links_new_tab: true
+
+# Jekyll collections. Name of collection correlates to folder name, with added
+# underscore _ prefix.
+collections:
+  guides:
+    permalink: "/:collection/:path"
+    output: true
+  published:
+    permalink: "/:collection/:path"
+    output: true
+
+# Just The Docs specific settings
+just_the_docs:
+  collections:
+    guides:
+      name: Guides
+    published:
+      name: Published RFCs
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-relative-links
