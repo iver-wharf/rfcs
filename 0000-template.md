@@ -41,6 +41,18 @@ Why do we need this? What's the problem you try to solve?
 ## Explanation
 
 Explain it as if you're writing documentation for an already existing feature.
+This is where you would add code samples, such as:
+
+```go
+type MyType struct {
+    text   string
+    number int
+}
+
+func (mt MyType) String() string {
+    return fmt.Sprintf("%q %d", mt.text, mt.number)
+}
+```
 
 ## Compatability
 
