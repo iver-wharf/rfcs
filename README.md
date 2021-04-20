@@ -50,6 +50,9 @@ if you so want.
 
    ```sh
    bundle install
+
+   # Optionally, if you have GNU make
+   make install
    ```
 
 4. Start the site. This does not need administrator access.
@@ -59,6 +62,9 @@ if you so want.
 
    # Optionally add the --livereload flag for automatic refresh
    bundle exec jekyll serve --livereload
+
+   # Optionally, if you have GNU make
+   make serve
    ```
 
 5. Visit the locally hosted page over at: <http://localhost:4000/>
