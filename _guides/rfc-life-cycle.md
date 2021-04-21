@@ -40,13 +40,13 @@ last_modified_date: 2021-04-19
    4. Any other collaborator.
 
 4. *[For postponed RFCs]* **RFC is picked back up.** This could be as simple as
-   leaving a new comment on a RFC PR (marked with `postponed` label) where you
+   leaving a new comment on an RFC PR (marked with `postponed` label) where you
    bring up some new concern or possible solution, all while trying to tackle
    the reason it was postponed in the first place.
 
 ## Published RFCs
 
-Once a RFC has been published, it is not touched again. With the exception of:
+Once an RFC has been published, it is not touched again. With the exception of:
 
 - semantically intact typo changes, or
 - fixing outdated links.
