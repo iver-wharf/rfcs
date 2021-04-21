@@ -16,7 +16,7 @@ lots of gray areas here.
 If your change you have in mind meets any of these critera, then you should
 *probably* create an RFC for it:
 
-1. Brings backward incomptabile changes to the backend or the way you host
+1. Brings backward incompatible changes to the backend or the way you host
    Wharf.
 
 2. Estimated large impact on users or developers of Wharf.

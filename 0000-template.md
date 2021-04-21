@@ -54,11 +54,11 @@ func (mt MyType) String() string {
 }
 ```
 
-## Compatability
+## Compatibility
 
-Bring up compatability issues and things to regard. How will this interfere
+Bring up compatibility issues and other things to regard. How will this interfere
 with existing components (providers, database, frontend)? Does this break
-backward compatability?
+backward compatibility?
 
 ## Alternative solutions
 

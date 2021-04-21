@@ -22,7 +22,7 @@ last_modified_date: 2021-04-19
    Our goal is that a newly created RFC is reviewed around 1-2 weeks after
    creation.
 
-3. **A descision is made.** Will the RFC be rejected, published, or postponed?
+3. **A decision is made.** Will the RFC be rejected, published, or postponed?
    Case by case basis here. Rejected and postponed RFC shall have an
    explanational comment by the developer/collaborator who closed/postponed the
    RFC to summarize the review discussions and explain the descision.
