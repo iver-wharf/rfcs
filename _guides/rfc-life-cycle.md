@@ -16,7 +16,7 @@ last_modified_date: 2021-04-19
 
 2. **RFC goes into review.** Again, anyone may participate here. But the
    developers/[collaborators](https://docs.github.com/en/github/getting-started-with-github/github-glossary#collaborator)
-   of Wharf have the final saying in any descision and discussion, especially
+   of Wharf have the final saying in any decision and discussion, especially
    in *"endless discussions"*.
 
    Our goal is that a newly created RFC is reviewed around 1-2 weeks after
@@ -25,13 +25,13 @@ last_modified_date: 2021-04-19
 3. **A decision is made.** Will the RFC be rejected, published, or postponed?
    Case by case basis here. Rejected and postponed RFC shall have an
    explanational comment by the developer/collaborator who closed/postponed the
-   RFC to summarize the review discussions and explain the descision.
+   RFC to summarize the review discussions and explain the decision.
 
    - Published/approved: PR merged
    - Rejected: PR closed
    - Postponed: Label `postponed` is added to the PR
 
-   The person who makes this descision is a collaborator of descending
+   The person who makes this decision is a collaborator of descending
    preferred order:
 
    1. Author of RFC, given they are a [collaborator](https://docs.github.com/en/github/getting-started-with-github/github-glossary#collaborator).
