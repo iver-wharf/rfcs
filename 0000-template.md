@@ -36,7 +36,7 @@ Max one paragraph long description to fill in context and overview of this RFC.
 
 ## Motivation
 
-Why do we need this? What's the problem you try to solve?
+Why do we need this? What's the problem you are trying to solve?
 
 ## Explanation
 
@@ -72,4 +72,3 @@ Does this lay groundwork for some future changes? If so, what?
 ## Unresolved questions
 
 Questions you [RFC author] want help resolving from the reviewers.
-
