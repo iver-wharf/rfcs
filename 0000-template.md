@@ -21,7 +21,7 @@ last_modified_date: YYYY-MM-DD
 - Feature name: `{{page.rfc_feature_name}}`
 - Author: {{page.rfc_author_name}} ([@{{page.rfc_author_username}}](https://github.com/{{page.rfc_author_username}}))
 - Implementation issue: [{{page.impl_issue_repo}}#{{page.impl_issue_id}}](https://github.com/{{page.impl_issue_repo}}/issues/{{page.impl_issue_id}})
-  ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?label=issue%20state&logo=github&style=flat-square)
+  ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?label=issue%20state\&logo=github\&style=flat-square)
 
 ## Summary
 
@@ -71,4 +71,4 @@ Does this lay groundwork for some future changes? If so, what?
 
 ## Unresolved questions
 
-Questions you [RFC author] want help resolving from the reviewers.
+Questions you \[RFC author] want help resolving from the reviewers.

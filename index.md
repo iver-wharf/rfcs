@@ -13,8 +13,8 @@ major impact.
 
 ## Getting started
 
-Please visit the [RFC life cycle](./_guides/rfc-life-cycle.md) and
-[Writing RFCs](./_guides/writing-rfcs.md) pages to learn about how you can
+Please visit the [RFC life cycle](./\_guides/rfc-life-cycle.md) and
+[Writing RFCs](./\_guides/writing-rfcs.md) pages to learn about how you can
 start proposing RFCs yourself.
 
 ## Disclaimer

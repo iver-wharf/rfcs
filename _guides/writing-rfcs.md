@@ -70,4 +70,3 @@ Safest bet is just to only refer to the source instead of embedding it.
 
 We cannot merge RFCs that contain content that collides with our licenses,
 namely the MIT license.
-

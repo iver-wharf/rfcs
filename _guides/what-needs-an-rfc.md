@@ -28,11 +28,11 @@ If your change you have in mind meets any of these critera, then you should
 ## Examples
 
 - Wharf uses Jenkins, but we want to transition away from it. How do we run
-  builds without Jenkins? **&rarr; Definetly needs an RFC. Probably multiple**
+  builds without Jenkins? **→ Definetly needs an RFC. Probably multiple**
 
 - We want to change the syntax and schema of the `.wharf-ci.yml` file, while
   making it opt-in with a `version: v2` property inside the YAML file.
-  **&rarr; Actually a huge impact on the users. Definetly needs an RFC.**
+  **→ Actually a huge impact on the users. Definetly needs an RFC.**
 
-- Bug fixes **&rarr; Minor bugfix: No need for RFC. Major bugfix: Better safe
+- Bug fixes **→ Minor bugfix: No need for RFC. Major bugfix: Better safe
   than sorry, write an RFC for it.**

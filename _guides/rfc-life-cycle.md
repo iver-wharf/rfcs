@@ -12,7 +12,7 @@ last_modified_date: 2021-04-19
 
    But keep in mind, do not start something you're not willing to finish. If we
    have questions about your RFC, it will speed things up a lot if you
-   [the author] is there to respond to our questions.
+   \[the author] is there to respond to our questions.
 
 2. **RFC goes into review.** Again, anyone may participate here. But the
    developers/[collaborators](https://docs.github.com/en/github/getting-started-with-github/github-glossary#collaborator)
@@ -39,7 +39,7 @@ last_modified_date: 2021-04-19
    3. Collaborator whose skill matches the subject of the RFC. Ex: frontend.
    4. Any other collaborator.
 
-4. *[For postponed RFCs]* **RFC is picked back up.** This could be as simple as
+4. *\[For postponed RFCs]* **RFC is picked back up.** This could be as simple as
    leaving a new comment on an RFC PR (marked with `postponed` label) where you
    bring up some new concern or possible solution, all while trying to tackle
    the reason it was postponed in the first place.
