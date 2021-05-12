@@ -21,7 +21,7 @@ last_modified_date: YYYY-MM-DD
 - Feature name: `{{page.rfc_feature_name}}`
 - Author: {{page.rfc_author_name}} ([@{{page.rfc_author_username}}](https://github.com/{{page.rfc_author_username}}))
 - Implementation issue: [{{page.impl_issue_repo}}#{{page.impl_issue_id}}](https://github.com/{{page.impl_issue_repo}}/issues/{{page.impl_issue_id}})
-  ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?label=issue%20state\&logo=github\&style=flat-square)
+- Implementation status: ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?label=issue%20state\&logo=github\&style=flat-square)
 
 ## Summary
 
@@ -56,9 +56,9 @@ func (mt MyType) String() string {
 
 ## Compatibility
 
-Bring up compatibility issues and other things to regard. How will this interfere
-with existing components (providers, database, frontend)? Does this break
-backward compatibility?
+Bring up compatibility issues and other things to regard. How will this
+interfere with existing components (providers, database, frontend)? Does this
+break backward compatibility?
 
 ## Alternative solutions
 
