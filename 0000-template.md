@@ -1,5 +1,8 @@
 ---
 layout: default
+# This is just to fool remark-stringify not to escape & symbols
+# See https://github.com/syntax-tree/mdast-util-to-markdown/issues/8
+shields_io_query_params: label=issue%20state&logo=github&style=flat-square
 
 # Update the following (it's YAML syntax)
 pr_id: 0 # Update this with PR number/ID. No leading zeros
@@ -21,7 +24,7 @@ last_modified_date: YYYY-MM-DD
 - Feature name: `{{page.rfc_feature_name}}`
 - Author: {{page.rfc_author_name}} ([@{{page.rfc_author_username}}](https://github.com/{{page.rfc_author_username}}))
 - Implementation issue: [{{page.impl_issue_repo}}#{{page.impl_issue_id}}](https://github.com/{{page.impl_issue_repo}}/issues/{{page.impl_issue_id}})
-- Implementation status: ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?label=issue%20state\&logo=github\&style=flat-square)
+- Implementation status: ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?{{page.shields_io_query_params}})
 
 ## Summary
 
