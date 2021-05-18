@@ -184,9 +184,11 @@ solution for [configuring ASP.NET Core apps](https://docs.microsoft.com/en-us/as
 
 1. What should be the name of the repo?
 
-   - `github.com/iver-wharf/wharf-core` *&larr; Suggested by this RFC*
-   - `github.com/iver-wharf/wharf-core-lib`
-   - `github.com/iver-wharf/wharf-extra`
-   - `github.com/iver-wharf/wharf-utility`
-   - `github.com/iver-wharf/wharf-util`
-   - `github.com/iver-wharf/wharf-utils`
+   | Suggestion                           | Votes                |
+   | ----------                           | -----                |
+   | github.com/iver-wharf/wharf-core     | @jilleJr, @Pikabanga |
+   | github.com/iver-wharf/wharf-core-lib |                      |
+   | github.com/iver-wharf/wharf-extra    |                      |
+   | github.com/iver-wharf/wharf-utility  |                      |
+   | github.com/iver-wharf/wharf-util     |                      |
+   | github.com/iver-wharf/wharf-utils    | @iverestefans        |
