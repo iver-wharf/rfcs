@@ -13,9 +13,9 @@ rfc_author_username: jilleJr
 rfc_author_name: Kalle Jillheden # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
-impl_issue_id: 0
-impl_issue_repo: iver-wharf/wharf-api
-last_modified_date: YYYY-MM-DD
+impl_issue_id: 47
+impl_issue_repo: iver-wharf/iver-wharf.github.io
+last_modified_date: 2021-05-24
 ---
 
 # {{page.title}}
