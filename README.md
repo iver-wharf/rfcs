@@ -1,5 +1,7 @@
 # Wharf RFCs (Request For Comments)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4832fc1e5ca944d48f9a7cfd5e8334b0)](https://www.codacy.com/gh/iver-wharf/rfcs/dashboard?utm_source=github.com\&utm_medium=referral\&utm_content=iver-wharf/rfcs\&utm_campaign=Badge_Grade)
+
 For any substantial change that needs to be thought through in Wharf, we try to
 use RFCs for them instead of internally trying to talk it out in meetings.
 
