@@ -40,8 +40,8 @@ At the very least for failed tests.
 ## Motivation
 
 This is bad for the user because it leads to slower response times when
-loading the project view. It's also bad for the API because it leads to unnecessary fetches, and
-pointless repeated computation.
+loading the project view. It's also bad for the API because it leads to
+unnecessary fetches, and pointless repeated computation.
 
 Having the tests' error messages is pretty much a necessity when trying
 to fix them.
@@ -248,5 +248,6 @@ Nothing comes to mind.
   I can see it being necessary if somebody wants to upload local test results
   or something, but it doesn't feel like that would be required. ref. to: [Create a separate method to upload test results apart from artifacts](https://github.com/iver-wharf/wharf-api/issues/11)
 
-- As mentioned in [#17](https://github.com/iver-wharf/wharf-api/issues/17), we are unlikely to have to
-store successful test details. **Is there any foreseeable drawback to going that route?**
+- As mentioned in [#17](https://github.com/iver-wharf/wharf-api/issues/17), we
+  are unlikely to have to store successful test details.
+  **Is there any foreseeable drawback to going that route?**
