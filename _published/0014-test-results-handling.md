@@ -148,6 +148,7 @@ func (m ArtifactModule) getBuildArtifactTestResultsHandler(c *gin.Context) {
     	testResults.ArtifactID = artifactId
     } else {
     	// dbnotfound error
+    	return
     }
     
     // 200 with testResults
@@ -191,6 +192,8 @@ func parseTRX(file *File) []TestResult, TestResultSummary {
 // build.go
 // new, /build/{buildid}/test-result-summaries
 func (m BuildModule) getBuildTestResultSummariesHandler(c *gin.Context) {
+    buildId := ginutil.ParseParamUint(c, "buildid")
+
     struct TestResultSummaries {
     	Summaries []TestResultSummary `json:"summaries"`
     	Count     uint                `json:"count"`
@@ -199,14 +202,14 @@ func (m BuildModule) getBuildTestResultSummariesHandler(c *gin.Context) {
     testSummaries := TestResultSummaries{}
     
     m.Database.
-    	Where(&TestResultSummary{BuildID: buildID}).
+    	Where(&TestResultSummary{BuildID: buildId}).
     	Find(&testSummaries.Summaries)
     
     if len(testSummaries.Summaries) > 0 {
     	testResults.Count = len(testResults.Results)
-    	testResults.ArtifactID = testResults.Results[0].ArtifactID
     } else {
     	// dbnotfound error
+    	return
     }
     
     // 200 with testSummaries
