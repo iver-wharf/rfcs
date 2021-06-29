@@ -55,7 +55,7 @@ to fix them.
 
 ### wharf-api
 
-The POST `/build/{buildid}/artifact` endpoint handles inserting artifacts.
+The `POST /build/{buildid}/artifact` endpoint handles inserting artifacts.
 If there are TRX (XML) files, it also parses them to create an array of `TestResult` and
 one `TestResultSummary` per file.
 
@@ -221,10 +221,10 @@ func (m BuildModule) getBuildTestResultSummariesHandler(c *gin.Context) {
 
 <details><summary>wharf-web</summary>
 
-wharf-web changes to use the new GET
-`/build/{buildid}/test-result-summaries` and GET `/build/{buildid}/artifact/{artifactid}/test-results`
+wharf-web changes to use the new `GET
+/build/{buildid}/test-result-summaries` and `GET /build/{buildid}/artifact/{artifactid}/test-results`
 endpoints to retrieve the test result data instead of using the existing
-GET `/build/{buildid}/tests-results` endpoint.
+`GET /build/{buildid}/tests-results` endpoint.
 
 There would also be a way to view a build's test result details. [#17](https://github.com/iver-wharf/wharf-api/issues/17)
 </details>
@@ -232,7 +232,7 @@ There would also be a way to view a build's test result details. [#17](https://g
 ## Compatibility
 
 This breaks backward compatibility with projects using the
-GET `build/{buildid}/tests-results` endpoint, since it will get removed.
+`GET build/{buildid}/tests-results` endpoint, since it will get removed.
 
 ## Alternative solutions
 
