@@ -61,7 +61,7 @@ one `TestResultSummary` per file.
 The summaries get inserted into the database table `test_result_summary`.
 The results get inserted into the database table `test_result`.
 
-IMAGE wharf-db-graph.png HERE
+![Database structure](https://github.com/iver-wharf/rfcs/blob/33e14dceb44755ce5e0c66b257bbffe2bb3568d7/_assets/wharf-db-graph.png)
 
 Pseudocode-like, without error handling
 ```go
