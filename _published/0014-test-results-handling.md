@@ -47,12 +47,13 @@ Having the tests' error messages is pretty much a necessity when trying
 to fix them.
 
 ## Related GitHub issues
+
 - wharf-api [#11](https://github.com/iver-wharf/wharf-api/issues/11) [#17](https://github.com/iver-wharf/wharf-api/issues/17)
 - wharf-web [#13](https://github.com/iver-wharf/wharf-web/issues/13)
 
 ## Explanation
 
-<details><summary>wharf-api</summary>
+### wharf-api
 
 The POST `/build/{buildid}/artifact` endpoint handles inserting artifacts.
 If there are TRX (XML) files, it also parses them to create an array of `TestResult` and
@@ -61,7 +62,7 @@ one `TestResultSummary` per file.
 The summaries get inserted into the database table `test_result_summary`.
 The results get inserted into the database table `test_result`.
 
-![Database structure](https://github.com/iver-wharf/rfcs/blob/33e14dceb44755ce5e0c66b257bbffe2bb3568d7/_assets/wharf-db-graph.png)
+![Database structure](../_assets/wharf-db-graph.png)
 
 Pseudocode-like, without error handling
 ```go
@@ -81,7 +82,7 @@ type Build struct {
     Params      []BuildParam `gorm:"foreignKey:BuildID" json:"params"`
     IsInvalid   bool         `gorm:"not null;default:false" json:"isInvalid"` 
     // added 
-    TestResultSummaryCount uint `gorm:"not null" json:"testResultSummaryCount"`
+    TestResultSummaries []TestResultSummary `gorm:"foreignKey:BuildID" json:"testResultSummaries"`
 }
 // new
 type TestResultSummary struct {
@@ -99,8 +100,8 @@ type TestResult struct {
     ArtifactID  uint 	  `gorm:"not null;index:testresult_idx_artifact_id" json:"artifactId"`
     Artifact    *Artifact `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
     Name        string	  `gorm:"not null;" json:"name"`
-    Ran         string 	  `gorm:"not null;" json:"ran"`
-    Passed      string 	  `gorm:"not null;" json:"passed"`
+    Ran         bool 	  `gorm:"not null;" json:"ran"`
+    Passed      bool 	  `gorm:"not null;" json:"passed"`
     StartedOn   *time.Time `gorm:"nullable;default:NULL;" json:"startedOn" format:"date-time"`
     CompletedOn *time.Time `gorm:"nullable;default:NULL;" json:"finishedOn" format:"date-time"`
 }
@@ -141,7 +142,7 @@ func (m ArtifactModule) getBuildArtifactTestResultsHandler(c *gin.Context) {
 	
     m.Database.
         Where(&TestResult{BuildID: buildId, ArtifactID: artifactId}).
-        Find(&testSummaries.Summaries)
+        Find(&testResults.Results)
     
     if len(testResults.Results) > 0 {
     	testResults.Count = len(testResults.Results)
