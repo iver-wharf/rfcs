@@ -203,7 +203,7 @@ Nothing comes to mind.
 - I am having trouble thinking of how to test filling out the database
   with data from the old test results. **What would be a good way to do this?**
   - We can ignore this. There's not much to gain from this.
-  
+
 - **Is an upload endpoint, separate from the one for other artifacts, for test
   results necessary?**
   I can see it being necessary if somebody wants to upload local test results
@@ -215,6 +215,6 @@ Nothing comes to mind.
 - As mentioned in [#17](https://github.com/iver-wharf/wharf-api/issues/17), we
   are unlikely to have to store successful test details.
   **Is there any foreseeable drawback to going that route?**
-  - Yes. It can be good to store successful tests to, for example, notice performance
-  regression. Seeing which tests have been skipped can also be good to determine
-    whether they have been skipped by mistake or not.
+  - Yes. It can be good to store successful tests to, for example, notice
+    performance regression. Seeing which tests have been skipped can also
+    be good to determine whether they have been skipped by mistake or not.
