@@ -196,14 +196,25 @@ Nothing comes to mind.
 
 ## Unresolved questions
 
+Nothing comes to mind.
+
+## Resolved questions
+
 - I am having trouble thinking of how to test filling out the database
   with data from the old test results. **What would be a good way to do this?**
+  - We can ignore this. There's not much to gain from this.
   
 - **Is an upload endpoint, separate from the one for other artifacts, for test
   results necessary?**
   I can see it being necessary if somebody wants to upload local test results
   or something, but it doesn't feel like that would be required. ref. to: [Create a separate method to upload test results apart from artifacts](https://github.com/iver-wharf/wharf-api/issues/11)
+  - Yes. Separating responsibilities into separate endpoints allows the existing
+    endpoint to remain "dumb", while at the same time allowing us to expand the
+    functionality of the new endpoint with flags/logic.
 
 - As mentioned in [#17](https://github.com/iver-wharf/wharf-api/issues/17), we
   are unlikely to have to store successful test details.
   **Is there any foreseeable drawback to going that route?**
+  - Yes. It can be good to store successful tests to, for example, notice performance
+  regression. Seeing which tests have been skipped can also be good to determine
+    whether they have been skipped by mistake or not.
