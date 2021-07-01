@@ -58,7 +58,7 @@ to fix them. Currently, there is no way to ask the API for them.
 ### wharf-api
 
 The `POST /build/{buildid}/artifact` endpoint handles inserting artifacts, same
-as before. However, if it's a TRX file, one should call the
+as before. However, if it's a test results file (eg: .trx), one should call the
 `POST /build/{buildid}/test-results` endpoint instead. This tells the server
 to parse them as well, creating several `TestResult`s and one `TestResultSummary`
 per TRX file.
@@ -115,12 +115,12 @@ type File struct {
   fileName string
   data []bytes
 }
-// new, /build/{buildid}/test-results
+// @router /build/{buildid}/test-results [put]
 func (m ArtifactModule) putTestResultsHandler(c *gin.Context) {
   // parseMultipartFormData to get the files
   // for each file, parse and store in db
 }
-// new, /build/{buildid}/artifact/{artifactid}/test-results
+// @router /build/{buildid}/artifact/{artifactid}/test-results [get]
 func (m ArtifactModule) getBuildArtifactTestResultsHandler(c *gin.Context) {
   // fetch test results for the specified test
 }
