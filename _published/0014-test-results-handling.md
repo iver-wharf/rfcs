@@ -60,14 +60,15 @@ to fix them. Currently, there is no way to ask the API for them.
 The `POST /build/{buildid}/artifact` endpoint handles inserting artifacts, same
 as before. However, if it's a test results file (eg: .trx), one should call the
 `POST /build/{buildid}/test-results` endpoint instead. This tells the server
-to parse them as well, creating several `TestResult`s and one `TestResultSummary`
+to parse them as well, creating several `TestResultDetail`s and one `TestResultSummary`
 per TRX file.
 
 The summaries get inserted into the database table `test_result_summary`.\
-The results get inserted into the database table `test_result`.
+The results get inserted into the database table `test_result_detail`.
 
 ![Database structure](../_assets/wharf-db-graph.png)
 
+#### New or modified database models
 ```diff
 // database_models.go
 type Build struct {
@@ -97,7 +98,7 @@ type Build struct {
 +  Skipped     uint      `gorm:"not null" json:"skipped"`
 +}
 
-+type TestResult struct {
++type TestResultDetail struct {
 +  ArtifactID  uint              `gorm:"not null;index:testresult_idx_artifact_id" json:"artifactId"`
 +  Artifact    *Artifact         `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
 +  Name        string	        `gorm:"not null" json:"name"`
@@ -107,9 +108,10 @@ type Build struct {
 +  Status      TestResultStatus  `gorm:"not null" enums:"Failed,Passed,Skipped"`
 +}
 ```
+
+#### New functions, methods, and structs
 ```go
 // artifact.go
-// new
 type File struct {
   name string
   fileName string
@@ -119,27 +121,34 @@ type File struct {
 func (m ArtifactModule) putTestResultsHandler(c *gin.Context) {
   // parseMultipartFormData to get the files
   // for each file, parse and store in db
+  // then sends a response with the summary
 }
-// @router /build/{buildid}/artifact/{artifactid}/test-results [get]
-func (m ArtifactModule) getBuildArtifactTestResultsHandler(c *gin.Context) {
-  // fetch test results for the specified test
+// @router /build/{buildid]/test-result-details [get]
+func (m ArtifactModule) getBuildAllTestResultDetailsHandler(c *gin.Context) {
+  // fetch all test result details for build
 }
-// new
+// @router /build/{buildid}/test-result-details/{testresultsummaryid} [get]
+func (m ArtifactModule) getBuildTestResultDetailsHandler(c *gin.Context) {
+  // fetch all test result details for specific test for build
+}
+// @router /build/{buildid}/test-results-summary [get]
+func (m ArtifactModule) getBuildTestResultsSummary(c *gin.Context) {
+  // fetch summary of summaries, along with the summaries, for build
+}
+
 func parseMultipartFormData(c *gin.Context) []*File {
   // ...
 }
-// new
+
 func parseTRX(file *File) []TestResult, TestResultSummary {
   // ...
 }
 ```
 
 The new endpoint `GET /build/{buildid}/test-results-summary` fetches
-all test result summaries for a build and constructs a json response
-that contains them, and has a summary of them, like:
+all test result summaries for a build and constructs a JSON response like:
 
-<details><summary>GET /build/42/test-results-summary</summary>
-
+`GET /build/42/test-results-summary`
 ```json
 {
   "failed": 4,
@@ -163,16 +172,18 @@ that contains them, and has a summary of them, like:
   ]
 }
 ```
-</details>
 
 ### wharf-web
 
 wharf-web changes to use the new endpoints
 - `GET /build/{buildid}/test-results-summary`\
   To get summary of all test result summaries for build.
+
+- `GET /build/{buildid}/test-result-details`\
+  To get all test result details for build.
   
-- `GET /build/{buildid}/artifact/{artifactid}/test-results`\
-  To get test result details for build.
+- `GET /build/{buildid}/test-result-details/{testresultid}`\
+  To get specific test result details for build.
   
 - `POST /build/{buildid}/test-results`\
   To upload test result files for build.
