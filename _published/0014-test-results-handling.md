@@ -264,8 +264,8 @@ Nothing comes to mind.
 - **Should we model this to support other test result formats
   as well?**
   - It currently looks extensible enough. Attachments or other test fail states
-    can be considered later. I.e., when we want to start supporting something like
-    Java's JUnit, JS Jest, Go's built-in test runner, et al.
+    can be considered later. I.e., when we want to start supporting something
+    like Java's JUnit, JS Jest, Go's built-in test runner, et al.
 
 - **If we decide to support other test result formats, in what way should
   the client inform the API of what kind of format it is sending?**
