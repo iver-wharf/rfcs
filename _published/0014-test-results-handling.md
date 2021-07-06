@@ -260,3 +260,15 @@ Nothing comes to mind.
     be good to determine whether they have been skipped by mistake or not.
     Successful tests should probably be made opt-in, while skipped tests
     can be made opt-out.
+
+- **Should we model this to support other test result formats
+  as well?**
+  - It currently looks extensible enough. Attachments or other test fail states
+  can be considered later. I.e., when we want to start supporting something like
+  Java's JUnit, JS Jest, Go's built-in test runner, et al.
+
+- **If we decide to support other test result formats, in what way should
+  the client inform the API of what kind of format it is sending?**
+  - Optional parameter, default tries to guess based on file extension.
+     Specifying it forces an attempt to parse as that format.\
+    e.g. `?format=TRX` - Force parsing as TRX.
