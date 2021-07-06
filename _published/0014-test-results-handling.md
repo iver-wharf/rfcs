@@ -90,9 +90,9 @@ type Build struct {
 +type TestResultSummary struct {
 +  TestResultSummaryID uint `gorm:"primaryKey" json:"testResultSummaryId"`
 +  ArtifactID  uint      `gorm:"not null;index:testresultsummary_idx_artifact_id" json:"artifactId"`
-+  Artifact    *Artifact `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
++  Artifact    *Artifact `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"-"`
 +  BuildID     uint      `gorm:"not null;index:testresultsummary_idx_build_id" json:"buildId"`
-+  Build       *Build    `gorm:"foreignKey:BuildID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
++  Build       *Build    `gorm:"foreignKey:BuildID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"-"`
 +  Total       uint      `gorm:"not null" json:"total"`
 +  Failed      uint      `gorm:"not null" json:"failed"`
 +  Passed      uint      `gorm:"not null" json:"passed"`
@@ -102,13 +102,13 @@ type Build struct {
 +type TestResultDetail struct {
 +  TestResultDetailID uint       `gorm:"primaryKey" json:"testResultDetailId"`
 +  ArtifactID  uint              `gorm:"not null;index:testresult_idx_artifact_id" json:"artifactId"`
-+  Artifact    *Artifact         `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
++  Artifact    *Artifact         `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"-"`
 +  BuildID     uint              `gorm:"not null;index:testresult_idx_build_id" json:"buildId"`
-+  Build       *Build            `gorm:"foreignKey:BuildID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
++  Build       *Build            `gorm:"foreignKey:BuildID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"-"`
 +  Name        string            `gorm:"not null" json:"name"`
-+  Message     string            `gorm:"nullable" json:"message"`
++  Message     null.String       `gorm:"nullable" json:"message"`
 +  StartedOn   *time.Time        `gorm:"nullable;default:NULL;" json:"startedOn" format:"date-time"`
-+  CompletedOn *time.Time        `gorm:"nullable;default:NULL;" json:"finishedOn" format:"date-time"`
++  CompletedOn *time.Time        `gorm:"nullable;default:NULL;" json:"completedOn" format:"date-time"`
 +  Status      TestResultStatus  `gorm:"not null" enums:"Failed,Passed,Skipped"`
 +}
 ```
