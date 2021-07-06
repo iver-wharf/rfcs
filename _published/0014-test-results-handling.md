@@ -206,11 +206,11 @@ Deprecated endpoint (Add @deprecated flag in wharf-api)
 There would also be a way to view a build's test results' details. [#17](https://github.com/iver-wharf/wharf-api/issues/17)
 Something like this,
 
-> ## Details | Logs | `Tests` :red_circle: | Artifacts
+> ## Details | Logs | `Tests` :x: | Artifacts
 >
-> - :green_circle: Passed: 256
-> - :yellow_circle: Skipped: 0
-> - :red_circle: **Failed: 3**
+> - :heavy_check_mark: Passed: 256
+> - :large_orange_diamond: Skipped: 0
+> - :x: **Failed: 3**
 >
 > ### Failed tests
 >
