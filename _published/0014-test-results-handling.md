@@ -88,6 +88,7 @@ type Build struct {
 }
 
 +type TestResultSummary struct {
++  TestResultSummaryID uint `gorm:"primaryKey" json:"testResultSummaryId"`
 +  ArtifactID  uint      `gorm:"not null;index:testresultsummary_idx_artifact_id" json:"artifactId"`
 +  Artifact    *Artifact `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
 +  BuildID     uint      `gorm:"not null;index:testresultsummary_idx_build_id" json:"buildId"`
@@ -99,9 +100,12 @@ type Build struct {
 +}
 
 +type TestResultDetail struct {
++  TestResultDetailID uint       `gorm:"primaryKey" json:"testResultDetailId"`
 +  ArtifactID  uint              `gorm:"not null;index:testresult_idx_artifact_id" json:"artifactId"`
 +  Artifact    *Artifact         `gorm:"foreignKey:ArtifactID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
-+  Name        string	        `gorm:"not null" json:"name"`
++  BuildID     uint              `gorm:"not null;index:testresult_idx_build_id" json:"buildId"`
++  Build       *Build            `gorm:"foreignKey:BuildID;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT" json:"-"`
++  Name        string            `gorm:"not null" json:"name"`
 +  Message     string            `gorm:"nullable" json:"message"`
 +  StartedOn   *time.Time        `gorm:"nullable;default:NULL;" json:"startedOn" format:"date-time"`
 +  CompletedOn *time.Time        `gorm:"nullable;default:NULL;" json:"finishedOn" format:"date-time"`
@@ -133,7 +137,8 @@ func (m ArtifactModule) getBuildTestResultDetailsHandler(c *gin.Context) {
 }
 // @router /build/{buildid}/test-results-summary [get]
 func (m ArtifactModule) getBuildTestResultsSummary(c *gin.Context) {
-  // fetch summary of summaries, along with the summaries, for build
+  // fetch sum of each artifact's test result summary for build
+  // as well as the list of each artifact's test result summary
 }
 
 func parseMultipartFormData(c *gin.Context) []*File {
@@ -181,17 +186,36 @@ wharf-web changes to use the new endpoints
 
 - `GET /build/{buildid}/test-result-details`\
   To get all test result details for build.
+  Supports pagination: `?limit=10&offset=20&orderby=asc`
   
 - `GET /build/{buildid}/test-result-details/{testresultid}`\
   To get specific test result details for build.
   
 - `POST /build/{buildid}/test-results`\
-  To upload test result files for build.
+  To upload test result files for build.\
+  Also responds with the same data as if calling `GET /build/{buildid}/test-results-summary` after.
 
-Deprecated endpoint
+Deprecated endpoint (Add @deprecated flag in wharf-api)
 - `GET /build/{buildid}/tests-results`
 
 There would also be a way to view a build's test results' details. [#17](https://github.com/iver-wharf/wharf-api/issues/17)
+Something like this,
+
+> ## <kbd>Details</kbd> | <kbd>Logs</kbd> | `Tests` :red_circle: | <kbd>Artifacts</kbd>
+>
+> - :green_circle: Passed: 256
+> - :yellow_circle: Skipped: 0
+> - :red_circle: **Failed: 3**
+>
+> ### Failed tests
+>
+> > #### Some/Sample/Tests
+> >
+> > ```
+> > Error: Strings did not match
+> >   Expected: Foo
+> >     Actual: Bar
+> > ```
 
 ## Compatibility
 
