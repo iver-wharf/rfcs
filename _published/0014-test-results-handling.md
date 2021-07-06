@@ -66,9 +66,10 @@ per TRX file.
 The summaries get inserted into the database table `test_result_summary`.\
 The results get inserted into the database table `test_result_detail`.
 
-![Database structure](../_assets/wharf-db-graph.png)
+![Database structure](../\_assets/wharf-db-graph.png)
 
 #### New or modified database models
+
 ```diff
 // database_models.go
 type Build struct {
@@ -114,6 +115,7 @@ type Build struct {
 ```
 
 #### New functions, methods, and structs
+
 ```go
 // artifact.go
 type File struct {
@@ -154,6 +156,7 @@ The new endpoint `GET /build/{buildid}/test-results-summary` fetches
 all test result summaries for a build and constructs a JSON response like:
 
 `GET /build/42/test-results-summary`
+
 ```json
 {
   "failed": 4,
@@ -181,27 +184,29 @@ all test result summaries for a build and constructs a JSON response like:
 ### wharf-web
 
 wharf-web changes to use the new endpoints
+
 - `GET /build/{buildid}/test-results-summary`\
   To get summary of all test result summaries for build.
 
 - `GET /build/{buildid}/test-result-details`\
   To get all test result details for build.
   Supports pagination: `?limit=10&offset=20&orderby=asc`
-  
+
 - `GET /build/{buildid}/test-result-details/{testresultid}`\
   To get specific test result details for build.
-  
+
 - `POST /build/{buildid}/test-results`\
   To upload test result files for build.\
   Also responds with the same data as if calling `GET /build/{buildid}/test-results-summary` after.
 
 Deprecated endpoint (Add @deprecated flag in wharf-api)
+
 - `GET /build/{buildid}/tests-results`
 
 There would also be a way to view a build's test results' details. [#17](https://github.com/iver-wharf/wharf-api/issues/17)
 Something like this,
 
-> ## <kbd>Details</kbd> | <kbd>Logs</kbd> | `Tests` :red_circle: | <kbd>Artifacts</kbd>
+> ## Details | Logs | `Tests` :red_circle: | Artifacts
 >
 > - :green_circle: Passed: 256
 > - :yellow_circle: Skipped: 0
@@ -211,7 +216,7 @@ Something like this,
 >
 > > #### Some/Sample/Tests
 > >
-> > ```
+> > ```text
 > > Error: Strings did not match
 > >   Expected: Foo
 > >     Actual: Bar
