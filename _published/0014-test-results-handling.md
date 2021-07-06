@@ -258,3 +258,5 @@ Nothing comes to mind.
   - Yes. It can be good to store successful tests to, for example, notice
     performance regression. Seeing which tests have been skipped can also
     be good to determine whether they have been skipped by mistake or not.
+    Successful tests should probably be made opt-in, while skipped tests
+    can be made opt-out.
