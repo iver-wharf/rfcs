@@ -31,9 +31,11 @@ The intent is to avoid filtering and parsing test result files (TRX)
 from the generated artifacts each time we want to display them or a
 summary.
 
-We also want to display more detailed test result summaries in wharf-web.
-For this we will need to also store the messages that the tests produce.
-At the very least for failed tests.
+In addition, we want to display the test result summary in the builds list.
+
+We also want the ability to display more detailed test results. For this, we
+will store the messages that the tests produce, as well their names. At the
+very least for failed tests.
 
 ## Motivation
 
