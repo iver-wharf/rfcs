@@ -47,6 +47,10 @@ It does this for every build in the view, every time it is refreshed.
 This leads to unnecessary requests and computation. This, in turn, slows
 down the response times and increases the API load.
 
+Displaying the overall result ( :heavy_check_mark: / :large_orange_diamond: / :x: )
+of the tests in the builds list also makes it easier to navigate for the end-user.
+It is likely beneficial to include the amounts of each outcome here as well.
+
 Having the tests' error messages is also pretty much a necessity when trying
 to fix them. Currently, there is no way to ask the API for them.
 
