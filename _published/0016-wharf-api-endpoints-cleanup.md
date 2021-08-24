@@ -6,8 +6,8 @@ shields_io_query_params: label=issue%20state&logo=github&style=flat-square
 
 # Update the following (it's YAML syntax)
 pr_id: 16 # Update this with PR number/ID. No leading zeros
-rfc_feature_name: wharf-api-v5 # Use kebab-case
-title: "RFC-0016: wharf-api-v5" # Update this with PR number/ID and feature name. Use leading zeros
+rfc_feature_name: wharf-api-endpoints-cleanup # Use kebab-case
+title: "RFC-0016: wharf-api-endpoints-cleanup" # Update this with PR number/ID and feature name. Use leading zeros
 rfc_author_username: jilleJr
 rfc_author_name: Kalle Jillheden # Or same as username, if you wish
 
