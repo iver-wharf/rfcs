@@ -841,3 +841,9 @@ Does this lay groundwork for some future changes? If so, what?
   the creation-specific request models?
 
   Ex reuse `request.Provider` instead of having `request.ProviderUpdate`.
+
+- Is `-Match` a good suffix for the "soft match" fields? Could perhaps borrow
+  the SQL term "Like" (as [Camunda is doing](https://docs.camunda.org/manual/latest/reference/rest/task/get-query/))
+  but that feels like mixing the wrong domains.
+
+  Any suggestions?
