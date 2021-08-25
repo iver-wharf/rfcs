@@ -41,9 +41,12 @@ Max one paragraph long description to fill in context and overview of this RFC.
    these repositories should be treated as distinct Wharf projects.
 
 2. When importing Azure DevOps projects from <https://dev.azure.com/>, the Git
-   SSH URL is not correctly assigned as we're importing projects and not the
-   repositories so we don't get a Git SSH URL from the remote API and instead
-   try to construct it on an inaccurate assumtion, as can be seen here:
+   SSH URL is assigned an invalid value, as reported over in
+   <https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24>.
+
+   This because we're importing projects and not the repositories so we don't
+   get a Git SSH URL from the remote API and instead try to construct it on an
+   inaccurate assumtion, as can be seen here:
    [github.com/iver-wharf/wharf-provider-azuredevops/blob/internal/importer/importer.go](https://github.com/iver-wharf/wharf-provider-azuredevops/blob/7b6397029b9bbe10e14e1367195e2491bd6eae83/internal/importer/importer.go#L274-L285)
 
 ## Motivation
