@@ -185,7 +185,7 @@ the database models.
 Some overarching design principles going from v4 to v5:
 
 - Do not rely on ID references in the HTTP request body when targeting a
-  specifc object. For example:
+  specific object. For example:
 
   - Good: `PUT /project/123`
 
