@@ -27,15 +27,15 @@ last_modified_date: YYYY-MM-DD
 
 ## Summary
 
-Restructing the wharf-api by changing the paths of the endpoints, adding and
+Restructuring the wharf-api by changing the paths of the endpoints, adding and
 renaming path parameters, and changing the request and response models around.
 
 While we will keep backward compatibility for at least one major version, we
-will be chaning so much that this needs a full major version bump.
+will be changing so much that this needs a full major version bump.
 
-This is not however not the full list of changes to be made for v5, but instead
-a list of changes that will require us moving to v5. Other changes may be put
-into the v5 bump that are eluded from this RFC.
+This is, however, not the full list of changes to be made for v5. Instead, it's
+a list of changes that will require us moving to it. Changes not listed in
+this RFC may be included in the version bump as well.
 
 ## Motivation
 
@@ -45,7 +45,7 @@ endpoints in there. Most annoying issues are:
 - Some endpoints are plural, some are singular.
   Ex: `POST /project` vs `GET /projects`.
 
-- Some are misplaced and relies on request body instead of path/query
+- Some are misplaced and rely on request body instead of path/query
   parameters. Ex: `PUT /branches` instead of `PUT /project/{projectId}/branch`.
 
 - Path parameters are all lowercased, while all other query parameters are
@@ -54,13 +54,13 @@ endpoints in there. Most annoying issues are:
 - We use the database models in our request and response specs. This is a
   security hole as it's easy to accidentally expose too much data to the
   user. With separate models we would also make the Swagger documentation
-  more easily understood, where we could elude confusing specifications such as
+  more easily understood, where we could elide irrelevant specifications such as
   allowing to specify a project ID when creating a new project.
 
 ## Explanation
 
-Moving from wharf-api v4 to v5, all endpoints are now solely in singular
-format, and some has been moved to a completely different subpath.
+Moving from wharf-api v4 to v5, all endpoints are now in singular format.
+Some have also been moved to a completely different subpath.
 
 ### RESTful API design
 
@@ -74,12 +74,12 @@ Major changes:
 - PUT endpoints no longer acts as "add or update", but instead solely as
   "update".
 
-- POST endpoints for searching has been removed, please refer to the GET
-  endpoints using query parameters instead of HTTP request body to query.
+- POST endpoints for searching have been removed, please refer to the GET
+  endpoints using query parameters instead of an HTTP request body to query.
 
   - This allows finer control over the search endpoints. Starting with v5, you
     now have a range of `{field}Match` query parameters that does a
-    "soft match". Where instead of trying to match the result verbatim, the
+    "soft match". Where, instead of trying to match the result verbatim, the
     API will try a fuzzy or partial search for better human search results.
 
 - All endpoints without a path parameter declaring an ID are working with lists
@@ -89,13 +89,13 @@ Major changes:
 
 ### Deprecation of endpoints
 
-All endpoints that has been moved or removed are **still fully functioning
+All endpoints that have been moved or removed are **still fully functioning
 throughout the entire wharf-api v5**. The old endpoints has been **marked as
 "Deprecated" in the Swagger/OpenAPI specification.**
 
-Word of caution is that they may very well be **removed in the next major
+A word of caution, the deprecated endpoints may be **removed in the next major
 version bump up to v6.** As a user of the wharf-api, you need to migrate your
-applications to use the new endpoints as specified in this RFC.
+applications to use the new endpoints specified in this RFC.
 
 ### Request/response models changes
 
@@ -112,17 +112,17 @@ of models inside the wharf-api:
   [JSON](https://pkg.go.dev/encoding/json#Marshal) or other specific tags
   trimmed away.
 
-- `/pkg/models/request`: HTTP request models sent by the client and received by
+- `/pkg/models/request`: HTTP request models, sent by the client and received by
   the server. Go fields shall be tagged with:
 
   - [JSON](https://pkg.go.dev/encoding/json#Marshal) specific tags to declare
-    how they ought to be serialized
+    how they will be serialized.
 
   - [Gin](https://gin-gonic.com/) specific tags such as which fields are
-    required or optional, and sensible defaults;
+    required or optional, and sensible defaults.
 
-  - and [Swaggo](https://github.com/swaggo/swag) specific tags for better
-    Swagger specification generation.
+  - [Swaggo](https://github.com/swaggo/swag) specific tags for better Swagger
+    specification generation.
 
   There are some categories of request models for the same objects, namely:
 
@@ -156,10 +156,10 @@ of models inside the wharf-api:
   by the client. Go fields shall be tagged with:
 
   - [JSON](https://pkg.go.dev/encoding/json#Marshal) specific tags to declare
-    how they ought to be serialized
+    how they will be serialized.
 
-  - and [Swaggo](https://github.com/swaggo/swag) specific tags for better
-    Swagger specification generation.
+  - [Swaggo](https://github.com/swaggo/swag) specific tags for better Swagger
+    specification generation.
 
   Example:
 
@@ -173,24 +173,24 @@ of models inside the wharf-api:
   }
   ```
 
-Convertion between these are done explicitly on each usage to ensure no extra
-values are not leaked.
+Conversion between these are done explicitly on each usage to ensure no extra
+values are leaked.
 
 #### New layout for models
 
 To reduce duplication in data and make things more intuitive for the user,
-endpoints now prioritizes the layout of the model instead of just using
+endpoints now prioritize the layout of the model instead of just using
 the database models.
 
 Some overarching design principles going from v4 to v5:
 
-- Refrain from relying on ID references in HTTP requests but instead rely on
+- Avoid relying on ID references in from the HTTP request body. Instead, rely on
   query or path parameters.
 
 - Never suggest that an ID can be provided when creating or altering an object
   in POST or PUT requests.
 
-Some examples of these changes are the lot of PUT endpoints, such as
+The PUT endpoints now follow these principles, e.g.
 [`PUT /project/{projectId}/branch`](#put-projectprojectidbranch) (formerly
 known as `PUT /branches`) and [`PUT /project/{projectId}`](#put-projectprojectid)
 (formerly known as `PUT /project`) endpoints.
@@ -202,17 +202,17 @@ regular API usage, but when using code generation this comes in handy as the
 endpoint IDs can be used for functions/methods instead of some auto-generated
 names based on the path segments.
 
-Where previously the Swagger generated TypeScript method for
+Where, previously, the Swagger generated TypeScript method for
 `POST /project/{projectId}/build` *(formerly known as
 `POST /project/{projectid}/builds`)* was `projectProjectidBuildsGet()`, it will
-instead be `getProjectBranchList()`.
+now instead be `getProjectBranchList()`.
 
 ### Renamed path parameters
 
-The path parameter has been transformed from lowercase to camelCase.
+The path parameters have been changed from lowercase to camelCase.
 This only affects code generators, such as the
 [Swagger Codegen](https://github.com/swagger-api/swagger-codegen), and has no
-implications in the actual HTTP requests nor responses.
+implications in the actual HTTP requests nor the responses.
 
 Users who have autogenerated their clients and rely on the parameter names needs
 to update their references slightly when moving from v4 to v5.
@@ -827,7 +827,7 @@ think about in here.
 Does this lay groundwork for some future changes? If so, what?
 -->
 
-- As mentioned in the [#Compatability](#compatability), I have great plans for
+- As mentioned in the [#Compatibility](#compatibility), I have great plans for
   v6 with the [Hide providers behind API](https://iver-wharf.github.io/wharf-notes/hide-providers-behind-api)
   redesign. These changes in this RFC places the API on a steady concrete
   ground, instead of building on top of more dirt and slag.
