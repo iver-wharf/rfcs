@@ -184,11 +184,49 @@ the database models.
 
 Some overarching design principles going from v4 to v5:
 
-- Avoid relying on ID references in from the HTTP request body. Instead, rely on
-  query or path parameters.
+- Do not rely on ID references in the HTTP request body when targeting a
+  specifc object. For example:
 
-- Never suggest that an ID can be provided when creating or altering an object
-  in POST or PUT requests.
+  - Good: `PUT /project/123`
+
+    ```json
+    {
+      "name": "sample",
+      "description": "Sample project"
+    }
+    ```
+
+  - Bad: `PUT /project`
+
+    ```json
+    {
+      "projectId": 123,
+      "name": "sample",
+      "description": "Sample project"
+    }
+    ```
+
+- Do not use a model in the Swagger documentation that suggests the user can
+  provide an object ID for endpoints that creates objects. For example:
+
+  - Good: `POST /project`
+
+    ```json
+    {
+      "name": "sample",
+      "description": "Sample project"
+    }
+    ```
+
+  - Bad: `POST /project`
+
+    ```json
+    {
+      "projectId": 123,
+      "name": "sample",
+      "description": "Sample project"
+    }
+    ```
 
 The PUT endpoints now follow these principles, e.g.
 [`PUT /project/{projectId}/branch`](#put-projectprojectidbranch) (formerly
