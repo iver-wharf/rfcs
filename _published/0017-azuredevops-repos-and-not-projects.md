@@ -163,6 +163,22 @@ rename on their next import. To see how this is handled in detail, see the
 
 ## Compatibility
 
+### Keeping compatibility with self-hosted instances
+
+Will be kept. Compared to v1, we will use 1 new endpoint:
+
+```http
+GET https://dev.azure.com/{organization}/{projectId}/_apis/git/repositories
+```
+
+This new endpoint does also exist in Azure DevOps API v5.0, which we have
+relied on up until now.
+
+As for the new procedure of getting the Git SSH URL, this will produce better
+stability than before for unconventional installations of self-hosted
+Azure DevOps instances as long as their Git SSH URL is configured correctly,
+whereas conventional installations will continue to behave as before.
+
 ### Renaming projects
 
 Due to the Wharf project name change we will have to add backward
@@ -213,9 +229,9 @@ v1 to v2, where we explain these backward incompatibilities as well.
 For the sake of resolving
 <https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24> we could
 settle with still importing 1 Wharf project per Azure DevOps project, but
-this is so tightly coupled so I [@jilleJr] think it's best to tackle this
-inconsistency here and now. This RFC is not meant to fix that bug, but instead
-designed so that bug is fixed as a consequence.
+this is so tightly coupled so it's best to tackle this inconsistency here and
+now. This RFC is not meant to fix that bug, but instead designed so that bug is
+fixed as a consequence.
 
 ## Future possibilities
 
@@ -246,6 +262,16 @@ designed so that bug is fixed as a consequence.
   | A   | `{azure-org}/{azure-project}` |`{azure-repo}`    |
   | B   | `{azure-org}`                 |`{azure-repo}`    |
   | C   | `{azure-org}`                 |`{azure-project}` |
+
+  > Where:
+  > 
+  > - `{azure-org}` = name of the Azure DevOps organization that holds the Azure
+  >   DevOps project.
+  > 
+  > - `{azure-project}` = name of the Azure DevOps project.
+  > 
+  > - `{azure-repo}` = name of the code repository inside the Azure DevOps
+  >   project.
 
   The latter, naming C, is used in wharf-provider-azuredevops v1. For v2, how
   do we handle the naming when there are more than 1 code repository?
