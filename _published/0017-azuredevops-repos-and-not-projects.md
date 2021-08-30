@@ -27,14 +27,7 @@ last_modified_date: YYYY-MM-DD
 
 ## Summary
 
-Max one paragraph long description to fill in context and overview of this RFC.
-
-<!--
-   Try to fill out the following sections. If nothing comes to mind for a
-   section, then "Nothing comes to mind" should be written verbatim.
-
-   You are welcome to add more sections if you so need to.
--->
+Resolving two birds with one RFC here:
 
 1. We're importing each Azure DevOps project as its own Wharf project, while a
    project in Azure DevOps may contain more than one Git repositories. To Wharf,
@@ -104,52 +97,69 @@ albeit with different names on the Wharf projects to differentiate between them.
 
 ### Wharf project naming
 
+When importing an Azure DevOps project, the Wharf group and project names use
+the following format:
 
+| № code repos  | Wharf project group           | Wharf project name |
+| ------------  | -------------------           | ------------------ |
+| 0             | *not imported*                | *not imported*     |
+| 1             | `{azure-org}`                 | `{azure-project}`  |
+| 2 *(or more)* | `{azure-org}/{azure-project}` | `{azure-repo}`     |
 
-### Expected behaviour
+Where:
 
-When importing all for a given group (organization), first obtain the list of
-Azure DevOps projects using:
+- `{azure-org}` = name of the Azure DevOps organization that holds the Azure
+  DevOps project.
 
-> ```http
-> GET https://dev.azure.com/{organization}/_apis/projects
-> ```
->
-> <https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-5.0>
+- `{azure-project}` = name of the Azure DevOps project.
 
-Then, fetch the lists of repositories for each project by ID, or the specific
-project by name when only importing one, by using the following endpoint:
+- `{azure-repo}` = name of the code repository inside the Azure DevOps project.
 
-> ```http
-> GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories
-> ```
->
-> <https://docs.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-5.0>
+Wharf projects that has been imported in earlier versions may need an automatic
+rename on their next import. To see how this is handled in detail, see the
+[#Renaming projects](#renaming-projects) section.
 
-If the list of repositories for a given project is 2 or more, then import them
-as the Wharf group name `{organization}/{project}` and the Wharf project name
-as `{repository}`.
+### Import procedure
 
-If the list of repositories for a given project is 1, then import that repo as
-the Wharf group name `{organization}` and the Wharf project name as `{project}`
+1. First get the Azure DevOps project(s) using the endpoint:
 
-### Actual behaviour
+   ```http
+   GET https://dev.azure.com/{organization}/_apis/projects
+   ```
 
-When importing all projects for a group (organization):
+   <https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-5.0>
 
-> ```http
-> GET https://dev.azure.com/{organization}/_apis/projects
-> ```
->
-> <https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-5.0>
+   This is used to get the following information:
 
-When importing a single project by project name and group (organization) name:
+   - Project name
+   - Project description
+   - Project ID (GUID)
 
-> ```http
-> GET https://dev.azure.com/{organization}/_apis/projects/{projectId}
-> ```
->
-> <https://docs.microsoft.com/en-us/rest/api/azure/devops/core/projects/get?view=azure-devops-rest-5.0>
+2. For every project, list the code repositories to import using the endpoint:
+
+   ```http
+   GET https://dev.azure.com/{organization}/{projectId}/_apis/git/repositories
+   ```
+
+   <https://docs.microsoft.com/en-us/rest/api/azure/devops/git/repositories/list?view=azure-devops-rest-5.0>
+
+   This is used to get the following information:
+
+   - Repository name
+   - Git SSH URL
+   - Default branch name (but make sure to trim away the `refs/heads/` prefix)
+
+3. For every code repository, list the branches to import using the endpoint:
+
+   ```http
+   GET https://dev.azure.com/{organization}/_apis/git/repositories/{repositoryId}/refs?filter=heads/
+   ```
+
+   <https://docs.microsoft.com/en-us/rest/api/azure/devops/git/refs/list#refs-heads>
+
+   This is used to get the following information:
+
+   - Branch name (but make sure to trim away the `refs/heads/` prefix)
 
 ## Compatibility
 
@@ -159,17 +169,20 @@ Due to the Wharf project name change we will have to add backward
 compatibility to find these projects when importing with the new version
 and automatically rename them. Something like:
 
-1. Try find Wharf project with `group="{azure-org}/{azure-project}" && name="{azure-repo}"`
+1. Try find Wharf project according rules defined in
+   [#Wharf project naming](#wharf-project-naming).
 
-   If none, then try `group="{azure-org}" && name="{azure-project}"`
+   If there are more than 1 code repository, try with
+   `group="{azure-org}" && name="{azure-project}"`, as that was the old behavior
+   from wharf-provider-azuredevops v1.
 
 2. Update Wharf project with fresh data, including the new group name and
    project name.
 
-We would have to get through the ["group name cannot be changed"](https://github.com/iver-wharf/wharf-api/blob/74a4718fa830413a7e03cc5efed4d56f08f0398d/project.go#L365-L375)
-thing then, but that validation criteria seems arbitrary anyway and should be
-removed. Cherry on top is that it's not even checked in the `POST /project`
-endpoint.
+We need to get through the ["group name cannot be changed"](https://github.com/iver-wharf/wharf-api/blob/74a4718fa830413a7e03cc5efed4d56f08f0398d/project.go#L365-L375)
+validation criteria. As the validation is arbitrary it will be removed.
+This would also resolve the inconsistency that the validation is not checked in
+the `POST /project` endpoint.
 
 ### Build pipelines will fail
 
@@ -197,12 +210,30 @@ v1 to v2, where we explain these backward incompatibilities as well.
 
 ## Alternative solutions
 
-You pronounce one solution in this RFC, but keep the other alternatives you can
-think about in here.
+For the sake of resolving
+<https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24> we could
+settle with still importing 1 Wharf project per Azure DevOps project, but
+this is so tightly coupled so I [@jilleJr] think it's best to tackle this
+inconsistency here and now. This RFC is not meant to fix that bug, but instead
+designed so that bug is fixed as a consequence.
 
 ## Future possibilities
 
-Does this lay groundwork for some future changes? If so, what?
+- We can update the README.md inside wharf-provider-azuredevops :)
+
+  ```diff
+  -Import Wharf projects from Azure DevOps repositories. Mainly focused on
+  -importing from self hosted Azure DevOps instances, importing from
+  -dev.azure.com is not well tested.
+  +Import Wharf projects from Azure DevOps repositories. Tested on importing
+  +both from self hosted Azure DevOps instances as well as from <dev.azure.com>.
+  ```
+
+- For this issue: [Map projects per ID: update importers code #6](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/6)
+  we can import based on the Azure DevOps repository's GUIDs instead of the
+  project GUIDs, which would be more accurate and would mean less backward
+  compatibility migrations for the future, as this "importing repos and not
+  projects" change seems inevitable anyway.
 
 ## Unresolved questions
 
