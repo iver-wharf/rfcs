@@ -35,7 +35,7 @@ Resolving two birds with one RFC here:
 
 2. When importing Azure DevOps projects from <https://dev.azure.com/>, the Git
    SSH URL is assigned an invalid value, as reported over in
-   <https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24>.
+   [Invalid gitURL when importing from https://dev.azure.com (wharf-provider-azuredevops#24)](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24).
 
    This because we're importing projects and not the repositories so we don't
    get a Git SSH URL from the remote API and instead try to construct it on an
@@ -100,11 +100,10 @@ albeit with different names on the Wharf projects to differentiate between them.
 When importing an Azure DevOps project, the Wharf group and project names use
 the following format:
 
-| № code repos  | Wharf project group           | Wharf project name |
-| ------------  | -------------------           | ------------------ |
-| 0             | *not imported*                | *not imported*     |
-| 1             | `{azure-org}`                 | `{azure-project}`  |
-| 2 *(or more)* | `{azure-org}/{azure-project}` | `{azure-repo}`     |
+|         | Wharf project group           | Wharf project name |
+| ------- | -------------------           | ------------------ |
+| Format  | `{azure-org}/{azure-project}` | `{azure-repo}`     |
+| Example | MyOrg/MyProject               | MyRepo             |
 
 Where:
 
@@ -189,8 +188,8 @@ and automatically rename them. Something like:
    [#Wharf project naming](#wharf-project-naming).
 
    If there are more than 1 code repository, try with
-   `group="{azure-org}" && name="{azure-project}"`, as that was the old behavior
-   from wharf-provider-azuredevops v1.
+   `group="{azure-org}" && name="{azure-project}"`, as that was the old
+   behavior from wharf-provider-azuredevops v1.
 
 2. Update Wharf project with fresh data, including the new group name and
    project name.
@@ -226,12 +225,58 @@ v1 to v2, where we explain these backward incompatibilities as well.
 
 ## Alternative solutions
 
+### Keeping with importing projects 1:1
+
 For the sake of resolving
-<https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24> we could
-settle with still importing 1 Wharf project per Azure DevOps project, but
-this is so tightly coupled so it's best to tackle this inconsistency here and
-now. This RFC is not meant to fix that bug, but instead designed so that bug is
-fixed as a consequence.
+[Invalid gitURL when importing from https://dev.azure.com (wharf-provider-azuredevops#24)](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/24)
+we could settle with still importing 1 Wharf project per Azure DevOps project,
+but this is so tightly coupled so it's best to tackle this inconsistency here
+and now. This RFC is not meant to fix that bug, but instead designed so that
+bug is fixed as a consequence.
+
+### Different naming formats
+
+There are three main naming styles:
+
+| ID  | Project group                 | Project name     |
+| --- | -------------                 | ------------     |
+| A   | `{azure-org}/{azure-project}` |`{azure-repo}`    |
+| B   | `{azure-org}`                 |`{azure-repo}`    |
+| C   | `{azure-org}`                 |`{azure-project}` |
+
+> Where:
+> 
+> - `{azure-org}` = name of the Azure DevOps organization that holds the Azure
+>   DevOps project.
+> 
+> - `{azure-project}` = name of the Azure DevOps project.
+> 
+> - `{azure-repo}` = name of the code repository inside the Azure DevOps
+>   project.
+
+The latter, naming C, is used in wharf-provider-azuredevops v1. For v2, how
+do we handle the naming when there are more than 1 code repository?
+
+1. Always use the naming A.
+
+2. Use the naming C, unless the Azure DevOps project contains more than 1
+  code repository, where naming A should be used instead.
+
+3. Use the naming B/C when the `{azure-repo}` = `{azure-project}`, and use
+  naming A otherwise.
+
+Option 1 has been chosen based on the following values:
+
+- Wharf group and project names will stay consistent. While there may be some
+  duplication of phrasing in code repositories that share the same name as the
+  Azure DevOps project, it will be easier for end-users to understand the
+  connection if all Azure DevOps projects are imported the same way.
+
+- Less volatile to change. While option 2 and 3 would result in format change
+  whenever a project gains another code repository or the code repository is
+  renamed, option 1 will stay the same. Before we tackle
+  [Map projects per ID: update importers code (wharf-provider-azuredevops#6)](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/6)
+  sticking to option 1 will prove less bug prone.
 
 ## Future possibilities
 
@@ -245,7 +290,7 @@ fixed as a consequence.
   +both from self hosted Azure DevOps instances as well as from <dev.azure.com>.
   ```
 
-- For this issue: [Map projects per ID: update importers code #6](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/6)
+- For this issue: [Map projects per ID: update importers code (wharf-provider-azuredevops#6)](https://github.com/iver-wharf/wharf-provider-azuredevops/issues/6)
   we can import based on the Azure DevOps repository's GUIDs instead of the
   project GUIDs, which would be more accurate and would mean less backward
   compatibility migrations for the future, as this "importing repos and not
@@ -255,31 +300,5 @@ fixed as a consequence.
 
 - How to handle the naming?
 
-  There are three main naming styles:
+  Has been resolved: [#Different naming formats](#different-naming-formats)
 
-  | ID  | Project group                 | Project name     |
-  | --- | -------------                 | ------------     |
-  | A   | `{azure-org}/{azure-project}` |`{azure-repo}`    |
-  | B   | `{azure-org}`                 |`{azure-repo}`    |
-  | C   | `{azure-org}`                 |`{azure-project}` |
-
-  > Where:
-  > 
-  > - `{azure-org}` = name of the Azure DevOps organization that holds the Azure
-  >   DevOps project.
-  > 
-  > - `{azure-project}` = name of the Azure DevOps project.
-  > 
-  > - `{azure-repo}` = name of the code repository inside the Azure DevOps
-  >   project.
-
-  The latter, naming C, is used in wharf-provider-azuredevops v1. For v2, how
-  do we handle the naming when there are more than 1 code repository?
-
-  1. Always use the naming A.
-
-  2. Use the naming C, unless the Azure DevOps project contains more than 1
-     code repository, where naming A should be used instead.
-
-  3. Use the naming B/C when the `{azure-repo}` = `{azure-project}`, and use
-     naming A otherwise.
