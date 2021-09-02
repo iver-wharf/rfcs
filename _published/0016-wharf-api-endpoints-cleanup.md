@@ -845,7 +845,7 @@ I have great plans for v6 with the [Hide providers behind API](https://iver-whar
 approach. This will render most of the "provider to API" communication obsolete
 as the API will rely on the provider's responses instead of requests.
 
-Again, it's of utter importance that the old endpoints works as before,
+Again, it's of utmost importance that the old endpoints works as before,
 otherwise this will break Wharf for a long while.
 
 ## Alternative solutions
