@@ -301,4 +301,3 @@ Option 1 has been chosen based on the following values:
 - How to handle the naming?
 
   Has been resolved: [#Different naming formats](#different-naming-formats)
-
