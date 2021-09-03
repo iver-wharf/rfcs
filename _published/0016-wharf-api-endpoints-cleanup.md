@@ -860,6 +860,19 @@ think about in here.
   encounter some of those words that change drastically, such as
   "person" vs "people".
 
+- Still allowing `POST /api/.../search` to allow complex queries.
+
+  While this can be useful, it's not required for today's use cases. Not
+  banning POST searches for future use, but for these simpler search queries
+  they do not fit well.
+
+  Up until (and including) v4, the POST search endpoints accepted the database
+  models as the HTTP request body and then did a GORM `.Where` clause
+  on the unsanitized input. This is difficult to expand with custom search
+  queries. If we reintroduce POST search queries, that would then be to allow
+  complex queries such as "if name contains 'foo' and ID > 5; or description
+  is longer than 300 chars".
+
 ## Future possibilities
 
 <!--
