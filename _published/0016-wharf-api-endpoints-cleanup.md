@@ -51,11 +51,21 @@ endpoints in there. Most annoying issues are:
 - Path parameters are all lowercased, while all other query parameters are
   camelCased.
 
-- We use the database models in our request and response specs. This is a
-  security weakness as it induces a higher risk of exposing too much data to
-  the user. With separate models we would also make the Swagger documentation
-  easier to understand, where we could elide irrelevant specifications such as
-  allowing to specify a project ID when creating a new project.
+- We use the database models in our HTTP request and response specs.
+  The problems with this are:
+
+  - Security weakness as it induces a higher risk of exposing too much data to
+  the user.
+
+  - Swagger documentation has room for improvement. We can elide irrelevant
+    specifications such as allowing a project ID to be provided when creating
+    a new project.
+
+  - The abstraction layers get mixed. With different models we would decouple
+    the HTTP layer from the database layer, allowing for easier customization
+    in both layers, as well as easier to understand as the models doesn't have
+    to worry both about how to serialize into JSON as well as their database
+    table relations and constraints.
 
 ## Explanation
 
