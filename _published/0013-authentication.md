@@ -150,7 +150,7 @@ more room for choice and flexibility in the future.
 There are many types of identity verification systems.
 This RFC assumes that OIDC will be used. Within OIDC there are multiple
 different [flow definitions](https://developer.okta.com/docs/concepts/oauth-openid/#choosing-an-oauth-2-0-flow).
-We should primarily use `codeflow with pkce` as this is presumed to be the
+We will use `codeflow with pkce` as this is presumed to be the
 most secure at the time of writing.
 
 ## Future possibilities
