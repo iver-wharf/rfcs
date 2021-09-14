@@ -128,6 +128,9 @@ The OIDC standard defines a
 [list of certified clients](https://openid.net/developers/certified/)
 that can help simplify the implementation of ID Token retrieval.
 
+For the frontend, <https://github.com/damienbod/angular-auth-oidc-client>
+will be used.
+
 For the backend a full client will not be required. As the tokens just need
 to be validated and not requested. See
 [validating an access token](https://auth0.com/docs/security/tokens/access-tokens/validate-access-tokens)
