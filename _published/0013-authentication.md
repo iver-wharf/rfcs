@@ -117,7 +117,6 @@ For use in offline developer environments it should be possible to switch on a
 developer mode switch that allows bypassing validation of access
 tokens such that a valid login is not required.
 
-
 ### SSL Config Required as a part of OIDC
 
 For OIDC ssl is required. SSL certs will be inserted into the traefik config
