@@ -53,7 +53,7 @@ possible to extend this to multiple different sources later.
 - RBAC - [Role-Based Access Control](https://auth0.com/docs/authorization/rbac/)
 
 - Issuer - In this RFC this refers to the issuer field in a OIDC metadata
-  sheet. The issuer is an authority for validating JWT tokens used in OIDC.
+  sheet. The issuer is an authority for validating JWTs used in OIDC.
 
 ## Motivation
 
