@@ -119,8 +119,9 @@ tokens such that a valid login is not required.
 
 ### SSL Config Required as a part of OIDC
 
-For OIDC ssl is required. SSL certs will be inserted into the traefik config
-and generated with openSSL as part of the repo setup.
+For OIDC ssl is required. In order to avoid having to fill the development
+environment with --force-unsecure SSL certs will be inserted into the traefik
+config and generated with openSSL as part of the repo setup.
 
 ### Choice of Client
 
@@ -173,7 +174,3 @@ non-oidc-standard basis.
 
 ## Unresolved questions
 
-OIDC in any form demands full SSL security in all connections. In order to
-avoid having to fill the development environment with --force-unsecure
-bindings we should consider implementing certificate generation and importing
-for dev environments.
