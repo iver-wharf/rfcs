@@ -12,9 +12,9 @@ rfc_author_username: Alexamakans
 rfc_author_name: Alexander Fougner # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
-impl_issue_id: 0
+impl_issue_id: 66
 impl_issue_repo: iver-wharf/wharf-api
-last_modified_date: YYYY-MM-DD
+last_modified_date: 2021-07-14
 ---
 
 # {{page.title}}
@@ -91,7 +91,7 @@ type Build struct {
   Environment null.String  `gorm:"nullable;size:40" json:"environment" swaggertype:"string"`
   Stage       string       `gorm:"size:40;default:'';not null" json:"stage"`
   Params      []BuildParam `gorm:"foreignKey:BuildID" json:"params"`
-  IsInvalid   bool         `gorm:"not null;default:false" json:"isInvalid"` 
+  IsInvalid   bool         `gorm:"not null;default:false" json:"isInvalid"`
 + TestResultSummaries []TestResultSummary `gorm:"foreignKey:BuildID" json:"testResultSummaries"`
 }
 
