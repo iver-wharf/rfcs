@@ -2,7 +2,7 @@
 layout: default
 # This is just to fool remark-stringify not to escape & symbols
 # See https://github.com/syntax-tree/mdast-util-to-markdown/issues/8
-shields_io_query_params: label=issue%20state&logo=github&style=flat-square
+shields_io_query_params: label=milestone&logo=github&style=flat-square
 
 # Update the following (it's YAML syntax)
 pr_id: 16 # Update this with PR number/ID. No leading zeros
@@ -12,8 +12,8 @@ rfc_author_username: jilleJr
 rfc_author_name: Kalle Jillheden # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
-impl_issue_id: 65
-impl_issue_repo: iver-wharf/wharf-api
+impl_milestone_id: 1
+impl_repo: iver-wharf/wharf-api
 last_modified_date: 2021-09-03
 ---
 
@@ -22,8 +22,8 @@ last_modified_date: 2021-09-03
 - RFC PR: [iver-wharf/rfcs#{{page.pr_id}}](https://github.com/iver-wharf/rfcs/pull/{{page.pr_id}})
 - Feature name: `{{page.rfc_feature_name}}`
 - Author: {{page.rfc_author_name}} ([@{{page.rfc_author_username}}](https://github.com/{{page.rfc_author_username}}))
-- Implementation issue: [{{page.impl_issue_repo}}#{{page.impl_issue_id}}](https://github.com/{{page.impl_issue_repo}}/issues/{{page.impl_issue_id}})
-- Implementation status: ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?{{page.shields_io_query_params}})
+- Implementation repo: [{{page.impl_repo}}](https://github.com/{{page.impl_repo}})
+- Implementation milestone: [![GitHub milestone progress](https://img.shields.io/github/milestones/progress/{{page.impl_repo}}/{{page.impl_milestone_id}}?{{page.shields_io_query_params}})](https://github.com/{{page.impl_repo}}/milestone/{{page.impl_milestone_id}})
 
 ## Summary
 
