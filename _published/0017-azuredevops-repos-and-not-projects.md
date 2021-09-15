@@ -245,12 +245,12 @@ There are three main naming styles:
 | C   | `{azure-org}`                 |`{azure-project}` |
 
 > Where:
-> 
+>
 > - `{azure-org}` = name of the Azure DevOps organization that holds the Azure
 >   DevOps project.
-> 
+>
 > - `{azure-project}` = name of the Azure DevOps project.
-> 
+>
 > - `{azure-repo}` = name of the code repository inside the Azure DevOps
 >   project.
 
@@ -260,10 +260,10 @@ do we handle the naming when there are more than 1 code repository?
 1. Always use the naming A.
 
 2. Use the naming C, unless the Azure DevOps project contains more than 1
-  code repository, where naming A should be used instead.
+   code repository, where naming A should be used instead.
 
 3. Use the naming B/C when the `{azure-repo}` = `{azure-project}`, and use
-  naming A otherwise.
+   naming A otherwise.
 
 Option 1 has been chosen based on the following values:
 

@@ -173,4 +173,3 @@ requires interaction directly with each respective IDP on a
 non-oidc-standard basis.
 
 ## Unresolved questions
-

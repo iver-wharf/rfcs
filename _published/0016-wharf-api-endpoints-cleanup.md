@@ -55,7 +55,7 @@ endpoints in there. Most annoying issues are:
   The problems with this are:
 
   - Security weakness as it induces a higher risk of exposing too much data to
-  the user.
+    the user.
 
   - Swagger documentation has room for improvement. We can elide irrelevant
     specifications such as allowing a project ID to be provided when creating
