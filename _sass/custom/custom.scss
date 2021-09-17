@@ -1,0 +1,39 @@
+:root {
+  color-scheme: dark;
+}
+
+h1::before {
+  color: #f5f6fa;
+  content: '# ';
+  font-family: "SFMono-Regular", Menlo, Consolas, Monospace;
+}
+
+h2 {
+  border-bottom: 1px solid #f5f6fa;
+}
+
+h2::before {
+  color: #f5f6fa;
+  content: '## ';
+  font-family: "SFMono-Regular", Menlo, Consolas, Monospace;
+}
+
+h3 {
+  border-bottom: 1px dotted #94959a;
+}
+
+h3::before {
+  color: #94959a;
+  content: '### ';
+  font-family: "SFMono-Regular", Menlo, Consolas, Monospace;
+}
+
+h4 {
+  border-bottom: 1px dotted #5e5f63;
+}
+
+h4::before {
+  color: #5e5f63;
+  content: '#### ';
+  font-family: "SFMono-Regular", Menlo, Consolas, Monospace;
+}
