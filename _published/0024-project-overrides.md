@@ -296,4 +296,6 @@ Nothing comes to mind.
 
 ## Unresolved questions
 
-Nothing comes to mind.
+- Should the "Manual overrides" section be its own tab in wharf-web? Or is it
+  appropriate that it lives below the `.wharf-ci.yml` display in the
+  "Configuration" tab?
