@@ -32,7 +32,7 @@ strict rules on how to publish v2+ releases. We have not been Go-modules
 compliant in some of our repositories. This RFC suggest one of the many
 alternative solutions for being compliant, with its up- and downsides.
 This is an important decision, as it induces a lot of headaches if we do it
-wrong and have to choose a different strategy.
+wrong and have to switch to a different strategy later on.
 
 > There's an ironic trivia fact here: The documentation for Go modules is
 > longer than the full [Go language specification](https://go.dev/ref/spec),
