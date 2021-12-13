@@ -87,7 +87,7 @@ Contrary to some of the official Go recommendations, we do not apply any of the
 following strategies:
 
 - :warning: No duplicating code into subdirectories, where v1 would be kept at
-  `<repo root>/` and v2 would be kept at `<repo root>/v2/`. This breaks
+  `<repo_root>/` and v2 would be kept at `<repo_root>/v2/`. This breaks
   compatibility with Go versions older than 1.9.7, 1.10.3, and 1.11.0.
 
 - :warning: No separate branches for different major versions. All code will
@@ -122,7 +122,7 @@ The above decisions has been made from researching the following pages:
 ## Compatibility
 
 This breaks compatibility with developers using vendoring (where copies of the
-dependency source code is stored in `<repo root>/vendor/...`) and/or GOPATH
+dependency source code is stored in `<repo_root>/vendor/...`) and/or GOPATH
 (where source code you're working on is kept in `$GOPATH/src/...`, eg.
 `~/src/...`).
 
