@@ -39,6 +39,9 @@ wrong and have to choose a different strategy.
 > but worse is that the Go modules resources are spread out across blog posts,
 > wiki's, and documentation sites.
 
+This is based on a conversation that popped up in a PR comment thread:
+<https://github.com/iver-wharf/wharf-api-client-go/pull/29#discussion_r766513730>
+
 ## Motivation
 
 The wharf-api is an example of a version 2 or higher Go module we've release.
