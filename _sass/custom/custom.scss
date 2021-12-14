@@ -37,3 +37,13 @@ h4::before {
   content: '#### ';
   font-family: "SFMono-Regular", Menlo, Consolas, Monospace;
 }
+
+blockquote {
+  margin: 0.5em 0;
+  padding: 0.1em 2rem 0.1em 1.5em; // <ul> & <ol> use padding-left: 1.5em
+  padding-left: calc(1.5em - 4px);
+  background: #0004;
+  background: linear-gradient(90deg, #1c1b1f 0%, #27262b00 100%);
+  border-radius: 4px;
+  border-left: 4px solid #302d36;
+}
