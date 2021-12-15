@@ -34,7 +34,21 @@ together in Kubernetes, debugging capabilities, ability to execute
 wharf-api and ultimately end-user, etc. This RFC describes our replacement of
 Jenkins with four new Wharf components.
 
+There is a heavy focus on making the wharf-cmd-worker subcommand perform
+Wharf builds standalone, without a wharf-api and wharf-web to present the
+results.
+
 ## Motivation
+
+### Human-usable CLI
+
+The goal is that Wharf should be able to be run locally. This means that it
+should not have a strong dependency on wharf-api or any other Wharf component,
+but instead just to run a build.
+
+The only dependencies for running Wharf on a locally cloned repository should
+be to have a [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
+and executing `wharf run`
 
 ### Splitting up wharf-cmd
 
@@ -90,16 +104,6 @@ For these reasons, we are transitioning over to a master-worker architecture
 and separating some of these concerns into different components, all prefixed
 with `wharf-cmd-`.
 
-### Human-usable CLI
-
-The goal is that Wharf should be able to be run locally. This means that it
-should not have a strong dependency on wharf-api or any other Wharf component,
-but instead just to run a build.
-
-The only dependencies for running Wharf on a locally cloned repository should
-be to have a [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
-and executing `wharf run`
-
 ## Explanation
 
 The `wharf-cmd` repository (<https://github.com/iver-wharf/wharf-cmd>) is split
@@ -130,6 +134,11 @@ All communication is initiated by the end-user who can only talk to the
 wharf-api, and the flow looks like so:
 
 ![sequence diagram](../assets/0025-wharf-cmd-provisioning-seq-diagram.svg)
+
+Whereas if the wharf-cmd-worker is executed locally, all but the Kubernetes API
+and the wharf-cmd-worker itself are involved:
+
+![standalone execution sequence diagram](../assets/0025-wharf-cmd-provisioning-seq-diagram-standalone.svg)
 
 ### Terminology
 
@@ -177,12 +186,17 @@ wharf-api, and the flow looks like so:
 
 ### Component: wharf-cmd-worker
 
-- Go module path: `github.com/iver-wharf/wharf-cmd/pkg/cmd/run`
+- Go package path: `github.com/iver-wharf/wharf-cmd/pkg/cmd/run`
 - Subcommand: `wharf run ...`
 
-The work-horse of the wharf-cmd repository. Can be invoked from an end-user's
-local computer, or be created by wharf-cmd-provisioner when triggered via the
-wharf-api.
+The work-horse of the wharf-cmd repository. Can be invoked as a standalone from
+an end-user's local computer where only the build is performed and no wharf-api
+or database is needed, or the wharf-cmd-worker be spawned by
+wharf-cmd-provisioner when triggered via the wharf-api in a full deployment of
+all Wharf's components in a Kubernetes cluster to gain the benefits of a web
+interface and cloud-hosted persistent storage of build history.
+See the comparison of the sequence diagrams in the [#Diagrams](#diagrams)
+section above.
 
 The wharf-cmd-worker is short-lived. An instance is created for a specific
 Wharf build, and is terminated once the build is complete.
