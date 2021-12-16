@@ -12,8 +12,8 @@ rfc_author_username: jilleJr
 rfc_author_name: Kalle Fagerberg # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
-impl_issue_id: 0
-impl_issue_repo: iver-wharf/wharf-api
+impl_milestone_id: 0
+impl_repo: iver-wharf/wharf-cmd
 last_modified_date: YYYY-MM-DD
 ---
 
@@ -22,8 +22,8 @@ last_modified_date: YYYY-MM-DD
 - RFC PR: [iver-wharf/rfcs#{{page.pr_id}}](https://github.com/iver-wharf/rfcs/pull/{{page.pr_id}})
 - Feature name: `{{page.rfc_feature_name}}`
 - Author: {{page.rfc_author_name}} ([@{{page.rfc_author_username}}](https://github.com/{{page.rfc_author_username}}))
-- Implementation issue: [{{page.impl_issue_repo}}#{{page.impl_issue_id}}](https://github.com/{{page.impl_issue_repo}}/issues/{{page.impl_issue_id}})
-- Implementation status: ![GitHub issue state](https://img.shields.io/github/issues/detail/state/{{page.impl_issue_repo}}/{{page.impl_issue_id}}?{{page.shields_io_query_params}})
+- Implementation repo: [{{page.impl_repo}}](https://github.com/{{page.impl_repo}})
+- Implementation milestone: [![GitHub milestone progress](https://img.shields.io/github/milestones/progress/{{page.impl_repo}}/{{page.impl_milestone_id}}?{{page.shields_io_query_params}})](https://github.com/{{page.impl_repo}}/milestone/{{page.impl_milestone_id}})
 
 ## Summary
 
