@@ -12,9 +12,9 @@ rfc_author_username: jilleJr
 rfc_author_name: Kalle Fagerberg # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
-impl_milestone_id: 0
+impl_milestone_id: 1
 impl_repo: iver-wharf/wharf-cmd
-last_modified_date: YYYY-MM-DD
+last_modified_date: 2022-01-04
 ---
 
 # {{page.title}}
