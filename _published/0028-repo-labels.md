@@ -71,9 +71,9 @@ eight labels, all prefixed with `t/` as an abbreviation of `type/`:
 
 <!-- lint enable maximum-line-length -->
 
-Some of the above are renamed labels from what GitHub provides by default. The
-original GitHub-provided label names are found in the "Former label name"
-column.
+Some of the above are renamed labels from what GitHub provides by default or
+labels we at Wharf has added in the past. These previous label names are found
+in the "Former label name" column.
 
 The `t/rfc` label only applies to the <https://github.com/iver-wharf/rfcs> repo.
 
