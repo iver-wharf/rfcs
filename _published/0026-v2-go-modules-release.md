@@ -44,7 +44,7 @@ This is based on a conversation that popped up in a PR comment thread:
 
 ## Motivation
 
-The wharf-api is an example of a version 2 or higher Go module we've release.
+The wharf-api is an example of a version 2 or higher Go module we've released.
 Trying to import packages from for example v4.2.0 results in an error:
 
 ```console
