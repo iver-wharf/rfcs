@@ -38,7 +38,9 @@ fine grained labels to categorize our work in other than just `enhancement`.
 
 ## Explanation
 
-We prioritize with one of four labels, all prefixed with `p/` as an
+### Issue/PR prioritization labels
+
+Issues are prioritized via one of four labels, all prefixed with `p/` as an
 abbreviation of `priority/`:
 
 | Label    | Description                                          |
@@ -48,21 +50,24 @@ abbreviation of `priority/`:
 | `p/med`  | Medium priority. "Good to have"                      |
 | `p/low`  | Low priority. "Nice to have"                         |
 
-We categorize with one of TODO labels, all prefixed with `t/` as an
-abbreviation of `type/`:
+### Issue/PR type labels
+
+Issues or PRs has one the following types, which we categorize with one of
+eight labels, all prefixed with `t/` as an abbreviation of `type/`:
 
 <!-- lint disable maximum-line-length -->
 
-| Label        | Description                                          | Former label name |
-| -----        | -----------                                          | ----------------- |
-| `t/feature`  | New feature or request                               | `enhancement`     |
-| `t/bug`      | Something isn't working                              | `bug`             |
-| `t/docs`     | Improvements or additions to documentation           | `documentation`   |
-| `t/deps`     | Pull requests that update a dependency file          | `dependencies`    |
-| `t/question` | Further information is requested                     | `question`        |
-| `t/release`  | New release for this repo                            | `release`         |
-| `t/chore`    | Refactoring or other changes not affecting end-users |                   |
-| `t/meta`     | Meta-issue: issue that manages other issues          |                   |
+| Label        | Description                                                    | Former label name |
+| -----        | -----------                                                    | ----------------- |
+| `t/feature`  | New feature or request                                         | `enhancement`     |
+| `t/bug`      | Something isn't working                                        | `bug`             |
+| `t/docs`     | Improvements or additions to documentation                     | `documentation`   |
+| `t/deps`     | Pull requests that update a dependency file                    | `dependencies`    |
+| `t/question` | Further information is requested                               | `question`        |
+| `t/release`  | New release for this repo                                      | `release`         |
+| `t/chore`    | Refactoring or other changes not affecting end-users           |                   |
+| `t/meta`     | Meta-issue: issue that manages other issues                    |                   |
+| `t/rfc`      | This issue or pull request contains a new Request For Comments | `rfc`             |
 
 <!-- lint enable maximum-line-length -->
 
@@ -70,26 +75,45 @@ Some of the above are renamed labels from what GitHub provides by default. The
 original GitHub-provided label names are found in the "Former label name"
 column.
 
+The `t/rfc` label only applies to the <https://github.com/iver-wharf/rfcs> repo.
+
+### Issue/PR state labels
+
+These labels explain the state of an issue or PR.
+
+<!-- lint disable maximum-line-length -->
+
+| Label              | Description                               | Former label name |
+| -----              | -----------                               | ----------------- |
+| `s/dup`            | This issue or pull request already exists | `duplicate`       |
+| `good first issue` | Good for newcomers                        | *left as-is*      |
+| `help wanted`      | Extra attention is needed                 | *left as-is*      |
+| `s/invalid`        | This doesn't seem right                   | `invalid`         |
+| `s/wontfix`        | This will not be worked on                | `wontfix`         |
+| `s/rfc`            | Based on a Wharf RFC                      |                   |
+
+<!-- lint enable maximum-line-length -->
+
 ## Compatibility
 
-There are some GitHub-provided labels that are left as-is, as they explain the
-state of an issue or PR instead of describing its content. Some of these are
-also highly conventional, such as the `good first issue` label which some users
-use as a search term when searching for GitHub repositories to contribute to.
-For consistency, all are left unchanged.
+Two labels are left as-is, and don't get a prefix:
 
-| Label              | Description                               |
-| -----              | -----------                               |
-| `duplicate`        | This issue or pull request already exists |
-| `good first issue` | Good for newcomers                        |
-| `help wanted`      | Extra attention is needed                 |
-| `invalid`          | This doesn't seem right                   |
-| `wontfix`          | This will not be worked on                |
+- `good first issue` which is a "magic" label name used by GitHub to highlight
+  certain GitHub issues in search queries and in contribution pages
+  (ex: <https://github.com/iver-wharf/wharf-web/contribute>).
+
+- `help wanted` is used to highlight issued that normally cannot be solved by
+  the maintainers as-is and are requesting help form others.
+  Example of highlight:
+
+  ![help wanted labels in repo list](../assets/0028-help-wanted-labels.png)
 
 One other label that needs extra attention is the `dependencies` label used by
 Dependabot. Dependabot can be configured on a dependency version bump PR by
 changing the labels used in the PR to `t/deps` and then commenting
-`@dependabot use these labels`. This will be resolved in a retroactive fashion.
+`@dependabot use these labels`. This will be resolved in a retroactive fashion
+whenever Dependabot creates a new PR, and will not be attempted to be solved
+in a proactive manner.
 
 ## Alternative solutions
 
