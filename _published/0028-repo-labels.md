@@ -5,15 +5,15 @@ layout: default
 shields_io_query_params: label=issue%20state&logo=github&style=flat-square
 
 # Update the following (it's YAML syntax)
-pr_id: 0 # Update this with PR number/ID. No leading zeros
+pr_id: 28 # Update this with PR number/ID. No leading zeros
 rfc_feature_name: repo-labels # Use kebab-case
-title: "RFC-0000: Repo labels" # Update this with PR number/ID and feature name. Use leading zeros
+title: "RFC-0028: Repo labels" # Update this with PR number/ID and feature name. Use leading zeros
 rfc_author_username: jilleJr
 rfc_author_name: Kalle Fagerberg # Or same as username, if you wish
 
 # Leave these. Collaborator changes this before merging
 impl_issue_id: 0
-impl_issue_repo: iver-wharf/wharf-api
+impl_issue_repo: iver-wharf/iver-wharf.github.io
 last_modified_date: YYYY-MM-DD
 ---
 
