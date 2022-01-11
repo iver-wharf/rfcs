@@ -83,8 +83,7 @@ Example:
 
 ### Counter-recommendation decisions
 
-Contrary to some of the official Go recommendations, we do not apply any of the
-following strategies:
+Contrary to some of the official Go recommendations, our practices are:
 
 - :warning: No duplicating code into subdirectories, where v1 would be kept at
   `<repo_root>/` and v2 would be kept at `<repo_root>/v2/`. This breaks
