@@ -5,9 +5,9 @@ layout: default
 shields_io_query_params: label=issue%20state&logo=github&style=flat-square
 
 # Update the following (it's YAML syntax)
-pr_id: 0 # Update this with PR number/ID. No leading zeros
+pr_id: 29 # Update this with PR number/ID. No leading zeros
 rfc_feature_name: wharf-api-migrations # Use kebab-case
-title: "RFC-0000: wharf-api migrations" # Update this with PR number/ID and feature name. Use leading zeros
+title: "RFC-0029: wharf-api migrations" # Update this with PR number/ID and feature name. Use leading zeros
 rfc_author_username: jilleJr
 rfc_author_name: Kalle Fagerberg # Or same as username, if you wish
 
@@ -40,9 +40,8 @@ migrations when they're not needed as well as allow us to add any custom logic.
 - No excessive logging on startup caused by GORMs auto migration checks.
 
 - Allows us to use apply custom code on migrations that GORM's auto migrations
-  doesn't handle, such as for concatenating two columns together, or as in
-  [wharf-api#133](https://github.com/iver-wharf/wharf-api/issues/133)'s case
-  that needs to parse test result artifacts again.
+  doesn't handle, as GORM's auto migrations only supports adding tables and
+  columns but not changing or removing data.
 
 ## Explanation
 
