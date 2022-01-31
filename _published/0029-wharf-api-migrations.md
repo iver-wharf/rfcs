@@ -116,6 +116,22 @@ func applyMigrations(migrations []migrater, latestAppliedID uint) error {
 }
 ```
 
+### Rollbacks
+
+This implementation does not support performing rollbacks. If you have migrated
+your database from migration ID 1 to migration ID 2, then there's no way to
+revert this via wharf-api's migration implementation.
+
+This is by design as it reduces the complexity for us tremendously.
+
+What we mean with "rollbacks" is the feature of asking wharf-api to revert the
+database to an older migration version by applying the rollback migrations in
+reverse order from how they were applied. This is what's not supported.
+
+In contrast, all migrations are applied in a transaction to allow
+database-level rollbacks on migration errors to not leave the database in a
+corrupt state.
+
 ## Compatibility
 
 Nothing comes to mind.
@@ -131,7 +147,7 @@ a very heavy unnecessary performance loss.
 ## Future possibilities
 
 With this in place we can do more complex migrations in the future, as we've
-up until now been heavily restrictured by only relying on GORM's `AutoMigrate`.
+up until now been heavily restricted by only relying on GORM's `AutoMigrate`.
 
 ## Unresolved questions
 
