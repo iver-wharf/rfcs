@@ -60,7 +60,7 @@ column table with the equivalent layout as the following GORM model:
 
 ```go
 type Migration struct {
-    ID string `gorm:"primaryKey"`
+    MigrationID string `gorm:"primaryKey"`
 }
 ```
 
