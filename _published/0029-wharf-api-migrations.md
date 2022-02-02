@@ -117,7 +117,7 @@ Where:
    00-23, and all being left-padded with zeros.
 
 All above being values relative to when the migrations were written by the
-developer. The date and time shall be is in UTC.
+developer. The date and time shall be in UTC.
 
 Example:
 
