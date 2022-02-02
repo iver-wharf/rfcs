@@ -45,92 +45,166 @@ migrations when they're not needed as well as allow us to add any custom logic.
 
 ## Explanation
 
+### Third-party library
+
+Library we are depending on is: <https://github.com/go-gormigrate/gormigrate>
+
+```sh
+go get -u github.com/go-gormigrate/gormigrate/v2
+```
+
 ### Storing migration state
 
-Migration state model:
+Migration state is kept by the table named `migrations`, and is a single
+column table with the equivalent layout as the following GORM model:
 
 ```go
-// pkg/model/database/database.go
-
 type Migration struct {
-    MigrationID uint      `gorm:"primaryKey"`
-    Comment     string    `gorm:"size:200"`
-    AppliedAt   time.Time `gorm:"autoCreateTime"`
+    ID string `gorm:"primaryKey"`
 }
 ```
+
+The table creation is defined in <https://github.com/go-gormigrate/gormigrate/blob/v2.0.0/gormigrate.go#L375-L382>.
 
 Sample data:
 
-| migration_id | comment                             | applied_at           |
-| ------------ | ----------------------------------- | -------------------- |
-| 1            | Initial migration                   | 2021-01-31T12:49:00Z |
-| 2            | Fix escaped strings in test results | 2021-02-02T14:12:00Z |
+| migration_id                |
+| --------------------------- |
+| 2016-08-30T14:00:00Z-v5.0.0 |
+| 2016-08-30T14:15:00Z-v5.0.0 |
+| 2016-08-30T14:30:00Z-v5.1.0 |
 
 ### Applying migrations
 
-On startup, check the **highest** migration ID, and:
+On start, wharf-api will invoke `gormigrate.Gormigrate.Migrate()`. Gormigrate
+will handle the migration process, which looks something like this:
 
-- if lower than latest migration: apply migrations.
-- if equal: do nothing.
-- if higher: error out, as this wharf-api binary doesn't support this DB layout.
-
-To know what version is the latest, `migrations.go` in wharf-api will keep a
-slice of migrations to apply, and then use the highest version there.
-
-Each migration implementation is defined as a struct that implements the new
-`migrater` interface:
-
-```go
-type migrater interface {
-    meta() migrationMeta
-    preMigrate(db *gorm.DB, latestAppliedID uint) error
-    postMigrate(db *gorm.DB, latestAppliedID uint) error
-}
-
-type migrationMeta struct {
-    id uint
-    comment string
-}
-```
-
-The code for applying these migrations look at a high level like this, where
-the `migrations` slice is pre-calculated to only include the migrations not yet
-applied:
-
-```go
-func applyMigrations(migrations []migrater, latestAppliedID uint) error {
-    for _, mig := range migrations {
-        err := mig.preMigrate(db, latestAppliedID)
-        // handle err
-    }
-    
-    err := applyAutoMigrations() // run db.AutoMigrate(tbl) on all models
-    // handle err
-    
-    for _, mig := range migrations {
-        err := mig.postMigrate(db, latestAppliedID)
-        // handle err
-    }
-    
-    return updateMigrationState(migrations) // adds migrations to `migrations` table
-}
-```
+1. Checks for duplicate migrations.
+2. Create migrations table (if not exists).
+3. Check for unknown migrations found in the migrations table.
+4. Apply schema initialization (if defined) if no migrations are found and exit.
+5. Run all migrations not already applied.
 
 ### Rollbacks
 
-This implementation does not support performing rollbacks. If you have migrated
-your database from migration ID 1 to migration ID 2, then there's no way to
-revert this via wharf-api's migration implementation.
+While <https://github.com/go-gormigrate/gormigrate> supports migration
+rollbacks, we will not make use of this feature. Instead, we will rely on
+transactions for the migrations to have automatic rollbacks.
 
-This is by design as it reduces the complexity for us tremendously.
+This means that a user will not be able to rollback their wharf-api version
+from the hypothetical wharf-api v5.5.0 back to wharf-api v5.4.0. Such a feature
+is left out to reduce complexity in wharf-api's code base. In other words: we
+will not support downgrading wharf-api.
 
-What we mean with "rollbacks" is the feature of asking wharf-api to revert the
-database to an older migration version by applying the rollback migrations in
-reverse order from how they were applied. This is what's not supported.
+### Migration ID format
 
-In contrast, all migrations are applied in a transaction to allow
-database-level rollbacks on migration errors to not leave the database in a
-corrupt state.
+The following format will be used in the migration IDs:
+
+```text
+YYYY-MM-DDThh:mm:ssZ-VERSION
+^^^^^^^^^^ ^^^^^^^^  ^^^^^^^
+\    2   / \   3  /  \  1  /
+```
+
+Where:
+
+1. `VERSION`: wharf-api version with `v` prefix.
+
+2. `YYYY-MM-DD`: date in format of year-month-day, with month and day being
+   left-padded with zeros.
+
+3. `hh:mm:ss`: time in format of hour:minute:seconds, with hour ranging from
+   00-23, and all being left-padded with zeros.
+
+All above being values relative to when the migrations were written by the
+developer. The date and time shall be is in UTC.
+
+Example:
+
+```text
+2022-02-02T14:49:00Z-v5.0.0
+```
+
+### Writing migrations
+
+We will follow Gormigrate's recommendation and redefine our models in each
+migrations to declare the changes.
+
+For example, if we have the following model in two different versions:
+
+```go
+// Hypothetical Build model in wharf-api v5.0.0
+type Build struct {
+	BuildID     uint
+	Environment string
+	Stage       string
+}
+
+// Hypothetical Build model in wharf-api v5.1.0
+type Build struct {
+	BuildID     uint
+	Environment string
+	Stage       string
+	StartedBy   User
+	StartedByID uint
+}
+```
+
+Then the migrations would look like so:
+
+```go
+gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
+	{
+		ID: "2022-01-29T14:41:00Z-v5.0.0",
+		Migrate: func(tx *gorm.DB) error {
+			type Build struct {
+				BuildID     uint
+				Environment string
+				Stage       string
+			}
+			return tx.AutoMigrate(&Build{})
+		},
+	},
+	{
+		ID: "2022-02-02T15:15:00Z-v5.1.0",
+		Migrate: func(tx *gorm.DB) error {
+			type Build struct {
+				// only include new fields
+				StartedBy   User
+				StartedByID uint
+			}
+			return tx.AutoMigrate(&Build{})
+		},
+	},
+})
+```
+
+### Initial migration
+
+Gormigrate supports "initial migration", which is applied when no migrations
+were found, and then skips all migrations and inserts all migrations into the
+`migrations` table as if they have been applied. This speeds up migration time
+and reduces unnecessary extra load on initial run with an empty database.
+
+We will make use of this in wharf-api, and run our previous pre-Gormigrate
+migration steps in this `InitSchema` function, where we only call GORM's
+`AutoMigrate` on all tables and then we're done.
+
+### Gormigrate options
+
+We will be using the following configuration options:
+
+```go
+options := gormigrate.Options{
+	TableName:                 "migrations",   // default
+	IDColumnName:              "migration_id", // non-default
+	IDColumnSize:              255,            // default
+	UseTransaction:            true,           // non-default
+	ValidateUnknownMigrations: true,           // non-default
+}
+```
+
+The `// non-default` comments refer to the default options from <https://github.com/go-gormigrate/gormigrate/blob/v2.0.0/gormigrate.go#L77-L84>.
 
 ## Compatibility
 
@@ -138,11 +212,30 @@ Nothing comes to mind.
 
 ## Alternative solutions
 
-Skipping the `migrations` table and try to evaluate each migration if they need
-to be applied. However this is more difficult in cases such as for
-[wharf-api#133](https://github.com/iver-wharf/wharf-api/issues/133) that needs
-to act on existing data, and performing this on every boot of wharf-api will be
-a very heavy unnecessary performance loss.
+- Skipping the `migrations` table and try to evaluate each migration if they
+  need to be applied. However this is more difficult in cases such as for
+  [wharf-api#133](https://github.com/iver-wharf/wharf-api/issues/133) that
+  needs to act on existing data, and performing this on every boot of wharf-api
+  will be a very heavy unnecessary performance loss.
+
+- Use alternative library, such as:
+
+  - <https://github.com/go-gorp/gorp>
+  - <https://github.com/golang-migrate/migrate>
+  - <https://github.com/pressly/goose>
+  - <https://github.com/rubenv/sql-migrate>
+
+  However they are all tailored to writing your own SQL, whereas the selected
+  <https://github.com/go-gormigrate/gormigrate> library allows us to keep using
+  GORM's fluent API of e.g `db.Model(&Build{}).Find(&builds)`.
+
+- Write our own migration. This was suggested originally, and can be found in
+  commit [c58124c](https://github.com/iver-wharf/rfcs/blob/c58124c9dfc0b931053b7c3d7ee03bcf5399d10c/_published/0029-wharf-api-migrations.md).
+
+  As our needs for migration support is slim, we might revisit this and make our
+  own anyway, but as it seems now this <https://github.com/go-gormigrate/gormigrate>
+  library suits us just fine for now, and there's no need to overcomplicate
+  things, even if it's fun to write our own libraries.
 
 ## Future possibilities
 
@@ -151,4 +244,4 @@ up until now been heavily restricted by only relying on GORM's `AutoMigrate`.
 
 ## Unresolved questions
 
-Nothing comes to mind.
+- Do we actually want to make use of rollbacks to support wharf-api downgrades?
