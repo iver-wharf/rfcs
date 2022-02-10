@@ -54,7 +54,7 @@ if you want.
    bundle install
 
    # Optionally, if you have GNU make
-   make install
+   make deps
    ```
 
 4. Start the site. This does not need administrator access.
@@ -76,13 +76,18 @@ if you want.
 Requires Node.js (npm) to be installed: <https://nodejs.org/en/download/>
 
 ```sh
-npm install
+make lint
 
-npm run lint
+make lint-md # only lint Markdown files
+```
 
-# Some errors can be fixed automatically. Keep in mind that this updates the
-# files in place.
-npm run lint-fix
+Some errors can be fixed automatically. Keep in mind that this updates the
+files in place.
+
+```sh
+make lint-fix
+
+make lint-fix-md # only lint and fix Markdown files
 ```
 
 ---
