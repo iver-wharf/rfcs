@@ -73,9 +73,9 @@ if you want.
 
 ## Linting markdown
 
-Requires Node.js (npm) to be installed: <https://nodejs.org/en/download/>
-
 ```sh
+make deps # download linting dependencies
+
 make lint
 
 make lint-md # only lint Markdown files
