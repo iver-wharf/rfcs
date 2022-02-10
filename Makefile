@@ -1,6 +1,6 @@
 .PHONY: deps serve \
 	lint lint-md \
-	lint-fix lint-md-fix
+	lint-fix lint-fix-md
 
 deps:
 	bundle install
