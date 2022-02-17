@@ -54,7 +54,7 @@ if you want.
    bundle install
 
    # Optionally, if you have GNU make
-   make install
+   make deps
    ```
 
 4. Start the site. This does not need administrator access.
@@ -73,16 +73,21 @@ if you want.
 
 ## Linting markdown
 
-Requires Node.js (npm) to be installed: <https://nodejs.org/en/download/>
+```sh
+make deps # download linting dependencies
+
+make lint
+
+make lint-md # only lint Markdown files
+```
+
+Some errors can be fixed automatically. Keep in mind that this updates the
+files in place.
 
 ```sh
-npm install
+make lint-fix
 
-npm run lint
-
-# Some errors can be fixed automatically. Keep in mind that this updates the
-# files in place.
-npm run lint-fix
+make lint-fix-md # only lint and fix Markdown files
 ```
 
 ---
