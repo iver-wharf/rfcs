@@ -10,7 +10,7 @@ start of our journey with RFCs, so we're trying to limit them to changes with
 major impact.
 
 Read more about the Wharf RFC process over at the GitHub pages:
-<https://iver-wharf.github.io/rfcs/>
+<https://wharf.iver.com/rfcs/>
 
 ## Disclaimer
 
@@ -20,7 +20,7 @@ notes or recordings, so we can see our previous decisions.
 
 **It is not** documentation of how things are meant to be implemented. Do not
 take this repository as the source of truth of how Wharf works. Please check
-out our [Wharf documentation](https://iver-wharf.github.io/) or the
+out our [Wharf documentation](https://wharf.iver.com/) or the
 [source code](https://github.com/iver-wharf/) itself to gain the actual source
 of truth.
 
